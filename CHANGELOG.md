@@ -2,7 +2,7 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
-## 0.5.0 (2026-10-26)
+## 0.5.0 (coming next)
 
 ### Added
 

@@ -1,5 +1,7 @@
 # What the factory shares, and what it never does
 
+*From version 0.5.0. Earlier versions share nothing at all.*
+
 The factory can share anonymous counts with Next-Gen Collective, so we can see what helps
 builders and what gets in their way. **It only does so if you say yes.** The first time you
 start it, it asks once. You can change your mind any time:
