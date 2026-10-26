@@ -1,0 +1,41 @@
+{
+  "name": "@next-generation-collective/factory",
+  "version": "0.3.0",
+  "description": "A team of AI agent engineers in your project that cannot report work as done without proof.",
+  "type": "module",
+  "bin": {
+    "factory": "./bin/factory.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "template",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/next-generation-collective/factory.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/next-generation-collective/factory#readme",
+  "bugs": {
+    "url": "https://github.com/next-generation-collective/factory/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "software-factory",
+    "ai-agents",
+    "verification",
+    "proof",
+    "cli"
+  ],
+  "license": "MIT"
+}

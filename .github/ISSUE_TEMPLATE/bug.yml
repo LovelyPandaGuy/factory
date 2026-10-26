@@ -1,0 +1,19 @@
+name: Bug
+description: The factory did something wrong.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to make it happen
+      description: The command, the kind of project, and the output (without secrets).
+  - type: input
+    id: version
+    attributes:
+      label: factory --version, and your system

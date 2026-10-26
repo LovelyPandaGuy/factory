@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Next-Gen Factory · Africa builds</title>
+<meta name="description" content="Next-Gen Factory checks the work you build with AI, proves it works, and learns from every builder who uses it. Built in the open, in Africa.">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #fdfbf7; --raised: #ffffff; --sunk: #f6f2ea;
+    --ink: #12100b; --ink-soft: #4a453b; --ink-faint: #857e70;
+    --gold: #f5a623; --gold-soft: #fbbf4d; --gold-deep: #b8760a;
+    --wash: rgba(245, 166, 35, .08); --obsidian: #070707;
+    --line: rgba(18, 16, 11, .08); --line-dark: rgba(253, 251, 247, .12);
+    --ease: cubic-bezier(0.32, 0.72, 0, 1); --r: 0.75rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--canvas); color: var(--ink); font: 17px/1.65 "Hanken Grotesk", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -0.02em; line-height: 1.05; margin: 0; }
+  .eyebrow { font-weight: 600; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-deep); }
+  .dark .eyebrow { color: var(--gold); }
+  p { margin: 0; }
+  section { padding: 96px 0; }
+  @media (max-width: 719px) { section { padding: 64px 0; } }
+
+  /* Nav */
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(7, 7, 7, .82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-dark); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  nav .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--canvas); font-family: "Bricolage Grotesque"; font-weight: 700; letter-spacing: .02em; }
+  nav .brand img { height: 30px; width: auto; }
+  nav .links { display: none; gap: 24px; white-space: nowrap; font-size: 15px; color: rgba(253, 251, 247, .72); }
+  nav .links a { text-decoration: none; transition: color .3s var(--ease); }
+  nav .links a:hover { color: var(--canvas); }
+  @media (min-width: 1180px) { nav .links { display: flex; } }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform .4s var(--ease), background .3s var(--ease); white-space: nowrap; }
+  .btn:active { transform: scale(.97); }
+  .btn-gold { background: var(--gold); color: var(--ink); }
+  .btn-gold:hover { background: var(--gold-soft); }
+  .btn-ghost { border: 1px solid var(--line-dark); color: var(--canvas); }
+  .btn-ghost:hover { background: rgba(253, 251, 247, .06); }
+
+  /* Hero */
+  .dark { background: var(--obsidian); color: var(--canvas); }
+  .hero { position: relative; overflow: hidden; padding: 72px 0 0; }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  .hero-grid > * { min-width: 0; }
+  @media (min-width: 980px) { .hero-grid { grid-template-columns: 1.05fr 1fr; } .hero { padding: 96px 0 40px; } }
+  .hero h1 { font-size: clamp(56px, 10vw, 118px); font-weight: 800; margin-top: 20px; }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero .lead { font-size: clamp(19px, 2.2vw, 22px); color: rgba(253, 251, 247, .78); max-width: 34ch; margin-top: 24px; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .cmd { margin-top: 28px; display: flex; align-items: center; gap: 12px; background: rgba(253, 251, 247, .05); border: 1px solid var(--line-dark); border-radius: var(--r); padding: 12px 12px 12px 18px; max-width: 520px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 15px; color: var(--canvas); }
+  .cmd span.p { color: var(--gold); }
+  .cmd code { flex: 1; overflow-x: auto; white-space: nowrap; }
+  .cmd button { flex: none; background: transparent; color: rgba(253, 251, 247, .7); border: 1px solid var(--line-dark); border-radius: 8px; padding: 6px 12px; font: 600 13px "Hanken Grotesk"; cursor: pointer; transition: color .3s var(--ease); }
+  .cmd button:hover { color: var(--canvas); }
+  @media (max-width: 479px) { .cmd { font-size: 13px; padding-left: 14px; gap: 8px; } }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 78% 45%, rgba(245, 166, 35, .10), transparent 70%); pointer-events: none; }
+  .hero .map { width: 115%; max-width: none; height: auto; display: block; margin: -40px -8% -40px 0; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
+  @media (max-width: 979px) { .hero .map { width: 100%; margin: 0 auto; max-width: 520px; } }
+  .hero .caption { font-size: 14px; color: rgba(253, 251, 247, .5); margin-top: 10px; text-align: right; }
+
+  /* Shift */
+  .section-head { max-width: 760px; }
+  .section-head h2 { font-size: clamp(34px, 5vw, 56px); font-weight: 700; margin-top: 14px; }
+  .section-head p { font-size: 19px; color: var(--ink-soft); margin-top: 18px; }
+  .dark .section-head p { color: rgba(253, 251, 247, .72); }
+  .shift { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 860px) { .shift { grid-template-columns: repeat(3, 1fr); } }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; }
+  .card h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .card p { color: var(--ink-soft); }
+  .card.highlight { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
+  .card.highlight p { color: rgba(253, 251, 247, .75); }
+  .card .tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 14px; }
+  .card.highlight .tag { color: var(--gold); }
+
+  /* Proof */
+  .proof-grid { display: grid; gap: 40px; margin-top: 48px; align-items: start; }
+  .proof-grid > *, .network > *, .founding > * { min-width: 0; }
+  @media (min-width: 980px) { .proof-grid { grid-template-columns: 1fr 1.1fr; } }
+  .term { margin: 0; background: #0b0b0c; color: #e9e4d8; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px -40px rgba(18, 16, 11, .45); position: sticky; top: 96px; }
+  .term-bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid rgba(253, 251, 247, .08); }
+  .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(253, 251, 247, .18); }
+  .term-bar span { margin-left: 10px; font-size: 12px; color: rgba(253, 251, 247, .5); }
+  .term pre { margin: 0; padding: 20px; overflow-x: auto; font: 13px/1.7 ui-monospace, "SF Mono", Menlo, monospace; }
+  .term b { color: #fdfbf7; } .t-ok { color: #7fd29a; } .t-look { color: var(--gold); } .t-dim { color: rgba(253, 251, 247, .45); }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 4px; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .steps li::before { content: counter(s, decimal-leading-zero); font-family: "Bricolage Grotesque"; font-weight: 700; color: var(--gold-deep); font-size: 18px; }
+  .steps b { display: block; font-weight: 600; }
+  .steps span { color: var(--ink-soft); }
+  .checks { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .checks li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; background: var(--sunk); border-radius: 10px; font-size: 15px; }
+  .checks li b { color: #1e6b3a; font-weight: 600; white-space: nowrap; }
+
+  /* Network */
+  .network { display: grid; gap: 40px; align-items: center; margin-top: 48px; }
+  @media (min-width: 980px) { .network { grid-template-columns: 1.2fr 1fr; } }
+  .network img { width: 100%; max-width: 560px; margin: 0 auto; display: block; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
+  .loop { display: grid; gap: 14px; }
+  .loop div { border-left: 2px solid var(--gold); padding: 4px 0 4px 18px; }
+  .loop b { display: block; color: var(--canvas); font-weight: 600; }
+  .loop span { color: rgba(253, 251, 247, .68); }
+
+  /* Path */
+  .path { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 860px) { .path { grid-template-columns: repeat(4, 1fr); } }
+  .path .card { position: relative; }
+  .path .n { font-family: "Bricolage Grotesque"; font-size: 44px; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 16px; display: block; }
+
+  /* Moat */
+  .moat { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 860px) { .moat { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Goal */
+  .goal { text-align: center; }
+  .goal .big { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: clamp(60px, 12vw, 150px); line-height: 1; color: var(--ink); letter-spacing: -0.04em; margin-top: 18px; }
+  .goal .big span { color: var(--gold); }
+  .goal p { color: var(--ink-soft); font-size: 19px; max-width: 640px; margin: 20px auto 0; }
+  .bar { max-width: 640px; height: 10px; background: var(--sunk); border-radius: 999px; margin: 32px auto 10px; overflow: hidden; }
+  .bar i { display: block; width: 0.6%; min-width: 10px; height: 100%; background: var(--gold); border-radius: 999px; }
+  .goal small { color: var(--ink-faint); font-size: 14px; }
+
+  /* Founding */
+  .founding { display: grid; gap: 32px; margin-top: 48px; }
+  @media (min-width: 980px) { .founding { grid-template-columns: 1fr 1fr; } }
+  .gets { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .gets li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; }
+  .gets li::before { content: "✓"; width: 24px; height: 24px; border-radius: 50%; background: var(--wash); color: var(--gold-deep); display: grid; place-items: center; font-weight: 700; font-size: 13px; margin-top: 2px; }
+  .gets b { font-weight: 600; }
+  .gets span { color: var(--ink-soft); }
+  .week { background: var(--ink); color: var(--canvas); border-radius: 18px; padding: 28px; }
+  .week h3 { font-size: 22px; margin-bottom: 18px; }
+  .week .row { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line-dark); }
+  .week .row b { color: var(--gold); font-weight: 600; }
+  .week .row span { color: rgba(253, 251, 247, .78); }
+  .note { font-size: 14px; color: var(--ink-faint); margin-top: 16px; }
+
+  /* Ask */
+  .ask { margin-top: 14px; font-size: 15px; color: rgba(253, 251, 247, .62); max-width: 560px; min-height: 3.3em; }
+  .ask-label { color: var(--gold); font-weight: 600; }
+  .ask-text { color: var(--canvas); transition: opacity .5s var(--ease); }
+  .ask-text.out { opacity: 0; }
+
+  /* Companies */
+  .offer { background: var(--ink); color: var(--canvas); border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .offer h3 { font-size: 26px; }
+  .offer p { color: rgba(253, 251, 247, .78); }
+  .offer .btn { align-self: flex-start; }
+
+  /* Open */
+  .rhythm { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 860px) { .rhythm { grid-template-columns: repeat(4, 1fr); } }
+  .rhythm .card b { display: block; font-family: "Bricolage Grotesque"; font-size: 20px; margin-bottom: 6px; }
+
+  /* Partners */
+  .partners { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 860px) { .partners { grid-template-columns: repeat(3, 1fr); } }
+  .partners .card { background: rgba(253, 251, 247, .04); border-color: var(--line-dark); color: var(--canvas); }
+  .partners .card p { color: rgba(253, 251, 247, .72); }
+
+  /* Final */
+  .final { text-align: center; }
+  .final h2 { font-size: clamp(44px, 8vw, 96px); font-weight: 800; }
+  .final h2 em { font-style: normal; color: var(--gold); }
+  .final .cmd { margin: 32px auto 0; }
+  .final .cta { justify-content: center; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  footer { border-top: 1px solid var(--line-dark); padding: 32px 0; color: rgba(253, 251, 247, .5); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+
+  /* Content always shows; the fade-in is added only when the script runs. */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/nextgen-logo-dark.png" alt="">Next-Gen Factory</a>
+    <div class="links">
+      <a href="#shift">The shift</a>
+      <a href="#proof">How it works</a>
+      <a href="#network">The network</a>
+      <a href="#companies">For companies</a>
+      <a href="#founding">Founding Builders</a>
+      <a href="#partners">Who we are</a>
+      <a href="https://github.com/next-generation-collective/factory">GitHub</a>
+    </div>
+    <a class="btn btn-gold" href="#founding">Start building</a>
+  </div>
+</nav>
+
+<header class="dark hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Next-Gen Factory · built in the open, in Africa</div>
+      <h1>Africa <em>builds.</em></h1>
+      <p class="lead">AI has made software almost free to create. It has not made it trustworthy. We are building the proof layer for AI-built software, with the youngest continent on earth.</p>
+      <div class="cmd" role="group" aria-label="Install command">
+        <span class="p">$</span><code id="cmd1">npx @next-generation-collective/factory</code>
+        <button type="button" data-copy="cmd1">Copy</button>
+      </div>
+      <p class="ask"><span class="ask-label">Then tell it what to build:</span> <span class="ask-text" id="ask">"add real-time fraud detection to the payments API"</span></p>
+      <div class="cta">
+        <a class="btn btn-gold" href="#founding">Become a Founding Builder</a>
+        <a class="btn btn-ghost" href="#proof">See how it works</a>
+      </div>
+    </div>
+    <div>
+      <img class="map" src="assets/africa-network-clear.svg" alt="A connected Africa: glowing points at cities across the continent joined into one network.">
+    </div>
+  </div>
+</header>
+
+<section id="shift">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The shift</div>
+      <h2>Code is becoming cheap. Trust is becoming everything.</h2>
+      <p>When something becomes cheap, the value moves to what is still scarce. AI made building fast and nearly free. What it did not make free is knowing that what was built is right, and proving it.</p>
+    </div>
+    <div class="shift">
+      <div class="card reveal"><span class="tag">Before AI</span><h3>Building was the hard part</h3><p>Software was slow and expensive to write. The money went to whoever could write the code.</p></div>
+      <div class="card reveal"><span class="tag">Now</span><h3>Anyone can build, fast</h3><p>AI writes a growing share of the world's code. It looks finished. Often it is not, and nobody can tell which is which.</p></div>
+      <div class="card highlight reveal"><span class="tag">What becomes valuable</span><h3>Proof that it works</h3><p>The scarce thing is certainty. Whoever can prove AI-built work is right sits at the centre of the AI economy. Nobody owns that yet.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="proof" style="background: var(--sunk);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Every build leaves proof.</h2>
+      <p>Next-Gen Factory works with the AI coding tool you already use: Claude Code, Codex, Gemini CLI or OpenCode. Your AI does the work. The factory makes sure it is the right work, and that it works.</p>
+    </div>
+    <div class="proof-grid">
+      <ol class="steps reveal">
+        <li><div><b>It plans from your code</b><span>What will change, the situations people forget, and how each part will be proven.</span></div></li>
+        <li><div><b>You approve</b><span>You read only what matters, and press yes.</span></div></li>
+        <li><div><b>Your AI builds it</b><span>The fast part, now open to everyone.</span></div></li>
+        <li><div><b>The factory checks it</b><span>Your tests and build run. Failures go back to the builder.</span></div></li>
+        <li><div><b>It uses the app like a person</b><span>In a real browser, with a screenshot for every check.</span></div></li>
+        <li><div><b>A second AI reviews it</b><span>A separate session that never saw how the first one thought.</span></div></li>
+        <li><div><b>You get the proof</b><span>And you decide whether to keep the change.</span></div></li>
+      </ol>
+      <figure class="term reveal" aria-label="Real output from the factory">
+        <div class="term-bar"><i></i><i></i><i></i><span>Real output, shortened · an open-source Python project · 2026-10-26</span></div>
+<pre><span class="t-dim">$</span> npx @next-generation-collective/factory
+
+<b>What this project can prove right now</b>
+  <span class="t-ok">PASS</span>     Secrets in code          None in 123 files
+  <span class="t-look">LOOK</span>     Possible test passwords  3 lines in test files
+  <span class="t-ok">OK</span>       Tests prove something    33 test files, none empty
+  <span class="t-dim">NOT RUN</span>  Tests run and pass       Run with --deep
+  <span class="t-ok">OK</span>       Personal data            None found
+
+<span class="t-ok">PASSED.</span> The checks that ran found no proven problem.
+1 thing for a person to look at.</pre>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="network">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The network</div>
+      <h2>A mistake caught in Lagos protects a builder in Johannesburg the next day.</h2>
+      <p>Every builder who uses the factory makes it smarter for every other builder. No single company, country or programme can build that. A continent working together can.</p>
+    </div>
+    <div class="network">
+      <img class="reveal" src="assets/africa-network-clear.svg" alt="The continent drawn as one network of builders.">
+      <div class="loop reveal">
+        <div><b>A builder uses it on real work</b><span>Problems are caught before anyone is hurt.</span></div>
+        <div><b>What it caught becomes a lesson</b><span>No client code, no client names. The builder's name goes on it.</span></div>
+        <div><b>Every factory learns it</b><span>Every builder on the network is protected from that mistake.</span></div>
+        <div><b>The proof adds up</b><span>On a public record that funders, companies and government can check.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The path</div>
+      <h2>From a free tool to an economy.</h2>
+      <p>Each stage stands on the one before it, and each one makes the next stronger.</p>
+    </div>
+    <div class="path">
+      <div class="card reveal"><span class="n">01</span><h3>The tool</h3><p>A free, open tool engineers use on every task, because it saves them pain. It gets in everywhere.</p></div>
+      <div class="card reveal"><span class="n">02</span><h3>The network</h3><p>Every builder's lessons make it smarter for all. It gets better the bigger it gets, and cannot be copied late.</p></div>
+      <div class="card reveal"><span class="n">03</span><h3>The standard</h3><p>"Proven by Next-Gen" becomes the mark people trust on AI-built work. Clients and employers ask for it.</p></div>
+      <div class="card highlight reveal"><span class="n">04</span><h3>The economy</h3><p>The largest pool of proven builders on the continent, matched to real work and real funding.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="lasts" style="background: var(--sunk);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Why it lasts</div>
+      <h2>The tool is the door. The network is the business.</h2>
+      <p>The largest technology companies are adding review to their own tools. They can copy a tool. They cannot copy what grows around it.</p>
+    </div>
+    <div class="moat">
+      <div class="card reveal"><h3>A community that teaches it</h3><p>Lessons from real projects across the continent, contributed by builders, owned by no single company.</p></div>
+      <div class="card reveal"><h3>A record nobody can fake</h3><p>A public history of proven work. Trust is earned over time; it cannot be bought on launch day.</p></div>
+      <div class="card reveal"><h3>Builders with proof</h3><p>A network of young African builders whose work is proven. That is people and trust, not software.</p></div>
+      <div class="card reveal"><h3>Built here, for the world</h3><p>African builders and African partners, held to a standard any client anywhere can check.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="goal" id="goal">
+  <div class="wrap reveal">
+    <div class="eyebrow">The goal</div>
+    <div class="big">1,000,000<span>.</span></div>
+    <p>Proven builds by African builders. Every one counted in public, every one linked to its evidence.</p>
+    <div class="bar" aria-hidden="true"><i></i></div>
+    <small>The count starts with the first 100 Founding Builders.</small>
+  </div>
+</section>
+
+<section id="companies">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">For companies</div>
+      <h2>Turn your youth budget into proven software work.</h2>
+      <p>Your youth-employment and skills spend has to show real results. Sponsor young builders for a year. They build real software for you, and every piece of work comes with proof you can show your board and your auditors.</p>
+    </div>
+    <div class="founding">
+      <ul class="gets reveal">
+        <li><div><b>Real work, not placements.</b> <span>Builders work on software your business actually needs.</span></div></li>
+        <li><div><b>Proof on every build.</b> <span>Tests, screenshots and an independent review, for every change they ship.</span></div></li>
+        <li><div><b>Evidence you can show.</b> <span>A public record of what each builder made, that your board and auditors can check.</span></div></li>
+        <li><div><b>A talent pipeline.</b> <span>Proven builders you already know, ready to hire.</span></div></li>
+      </ul>
+      <div class="offer reveal">
+        <h3>Sponsor a team of builders.</h3>
+        <p>A year of paid work for young people, guided by a mentor and checked by the factory. You choose the size of the team. We publish the proof together.</p>
+        <a class="btn btn-gold" href="mailto:hello@nextgencollective.co.za?subject=Sponsor%20a%20team%20of%20builders">Sponsor builders</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="founding" style="background: var(--sunk);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The first 100</div>
+      <h2>Become a Founding Builder.</h2>
+      <p>The first 100 engineers to build with the factory every day. What they build becomes the proof the movement stands on. They will be remembered as the people who proved Africa could build for the world.</p>
+    </div>
+    <div class="founding">
+      <ul class="gets reveal">
+        <li><div><b>Better work now.</b> <span>Fewer problems reach your users, and a second AI reviews every change.</span></div></li>
+        <li><div><b>A proof portfolio.</b> <span>Evidence of what you built, which says more than any CV.</span></div></li>
+        <li><div><b>The skill the AI economy pays for.</b> <span>Directing AI, and proving what it built is right.</span></div></li>
+        <li><div><b>A permanent place.</b> <span>Your name on the Founding Builders list and on every lesson you write.</span></div></li>
+        <li><div><b>First in line.</b> <span>When paid work and funding arrive, Founding Builders get first access, and the experienced ones become the paid mentors and reviewers.</span></div></li>
+      </ul>
+      <div class="week reveal">
+        <h3>A Founding Builder's week</h3>
+        <div class="row"><b>Every task</b><span>Start it with the factory. Approve the plan. Get the proof.</span></div>
+        <div class="row"><b>When it catches something</b><span>Share the lesson. Your name goes on it.</span></div>
+        <div class="row"><b>Once a week</b><span>A 30-minute show and tell: one proof page each.</span></div>
+        <div class="row"><b>Anytime</b><span>Tell us what broke. It decides what gets fixed next.</span></div>
+      </div>
+    </div>
+    <p class="note reveal">"First in line" is a commitment for when funding comes, not a promise of pay today.</p>
+  </div>
+</section>
+
+<section id="open">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Built in the open</div>
+      <h2>Open source, because proof only counts if you can check it.</h2>
+      <p>Anyone can read exactly how the factory checks work. That is what makes its proof believable to builders, clients, funders and government.</p>
+    </div>
+    <div class="rhythm">
+      <div class="card reveal"><b>Every week</b><p>Reports and lessons read, sorted and answered.</p></div>
+      <div class="card reveal"><b>Every lesson</b><p>Credited to its author, for good.</p></div>
+      <div class="card reveal"><b>Every release</b><p>Thanks contributors by name.</p></div>
+      <div class="card reveal"><b>No code needed</b><p>Writing a lesson is a real contribution. Anyone can help the network learn.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="partners">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Who we are</div>
+      <h2>Built by Next-Gen Collective.</h2>
+      <p>A youth-driven movement in South Africa, mobilising young Africans through entrepreneurship, AI and innovation, policy and wealth creation. Founded by Sibusiso Mngomezulu. The factory is how we put the movement to work. <a href="https://nextgencollective.co.za">Meet the movement</a>.</p>
+    </div>
+    <div class="partners">
+      <div class="card reveal"><h3>Funders</h3><p>Back outcomes you can check: young builders with proven work, counted in public.</p></div>
+      <div class="card reveal"><h3>Companies</h3><p>Work with builders whose every delivery comes with tests, screenshots and an independent review. <a href="#companies">Sponsor builders</a>.</p></div>
+      <div class="card reveal"><h3>Government</h3><p>Measurable progress on youth employment and digital skills, from real work.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark final">
+  <div class="wrap reveal">
+    <div class="eyebrow">Start with your next task</div>
+    <h2>Africa <em>builds.</em></h2>
+    <div class="cmd" role="group" aria-label="Install command">
+      <span class="p">$</span><code id="cmd2">npx @next-generation-collective/factory</code>
+      <button type="button" data-copy="cmd2">Copy</button>
+    </div>
+    <div class="cta">
+      <a class="btn btn-gold" href="https://github.com/next-generation-collective/factory/blob/main/PILOT.md">Start in 10 minutes</a>
+      <a class="btn btn-ghost" href="https://github.com/next-generation-collective/factory">Read the code</a>
+    </div>
+  </div>
+</section>
+
+<footer class="dark">
+  <div class="wrap">
+    <span>Next-Gen Collective · Africa as builder, not buyer.</span>
+    <span>Open source, MIT licence · <a href="https://nextgencollective.co.za">nextgencollective.co.za</a></span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll("[data-copy]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const text = document.getElementById(button.dataset.copy).textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "Copied";
+      } catch {
+        button.textContent = "Select and copy";
+      }
+      setTimeout(() => (button.textContent = "Copy"), 1800);
+    });
+  });
+  const io = "IntersectionObserver" in window
+    ? new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 })
+    : null;
+  document.querySelectorAll(".reveal").forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+</script>
+<script>
+(function () {
+  var el = document.getElementById('ask');
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var asks = [
+    '"add real-time fraud detection to the payments API"',
+    '"let doctors dictate notes in any language and get a structured patient record"',
+    '"build a live satellite map of flood risk for every city on the continent"',
+    '"add end-to-end encryption to the chat app"',
+    '"make the AI tutor adapt to how each student learns"'
+  ];
+  var i = 0;
+  setInterval(function () {
+    el.classList.add('out');
+    setTimeout(function () { i = (i + 1) % asks.length; el.textContent = asks[i]; el.classList.remove('out'); }, 500);
+  }, 4200);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# The CLI's core is reviewed by a maintainer.
+/cli/lib/ @SibusisoMngo @MohauSekoto
+/cli/template/ @SibusisoMngo @MohauSekoto
+/.github/ @SibusisoMngo @MohauSekoto

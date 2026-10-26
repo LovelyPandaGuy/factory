@@ -1,0 +1,37 @@
+# Sign in as a test account. Pass EMAIL and PASSWORD with -e.
+# Only called when the radar isn't showing (not signed in yet).
+appId: com.example.app
+---
+# First launch shows the intro: skip to sign in.
+- repeat:
+    while:
+      visible: "Next"
+    times: 6
+    commands:
+      - tapOn: "Next"
+- runFlow:
+    when:
+      visible: "Get Started"
+    commands:
+      - tapOn: "Get Started"
+- extendedWaitUntil:
+    visible: "you@example.com"
+    timeout: 30000
+- tapOn: "you@example.com"
+- inputText: ${EMAIL}
+- tapOn: "••••••••"
+- inputText: ${PASSWORD}
+- hideKeyboard
+- tapOn:
+    text: "Sign in"
+    index: -1
+# iOS may offer to save the password: decline.
+- extendedWaitUntil:
+    visible: "Save Password\\?"
+    timeout: 8000
+    optional: true
+- runFlow:
+    when:
+      visible: "Not Now"
+    commands:
+      - tapOn: "Not Now"

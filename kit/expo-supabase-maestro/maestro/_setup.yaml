@@ -1,0 +1,136 @@
+# Shared start for every flow: fresh app, permissions granted, phone on
+# Bouvet Island next to the test people, signed in as the test account,
+# wait for the radar. Real Supabase, no demo data.
+#   - Seed first: node scripts/seed-test-accounts.mjs
+#   - Run through scripts/e2e.sh, which passes EMAIL, PASSWORD and the
+#     location from .maestro/.test-accounts.env.
+#   - DEV_CLIENT=1 (simulator dev build): open the app from the dev server.
+appId: com.example.app
+---
+# Keep app data between flows: wiping it re-opens the dev build's one-time
+# developer menu, and closing that menu leaves this dev build on a black
+# screen (logged in specs/001-phone-ready-release/evidence/known-issues.md).
+- stopApp
+- launchApp:
+    clearState: false
+    permissions:
+      all: allow
+- setLocation:
+    latitude: ${TEST_LAT}
+    longitude: ${TEST_LNG}
+- runFlow:
+    when:
+      true: ${DEV_CLIENT == "1"}
+    commands:
+      # iOS may still be asking "Open in <App>?" from a previous run.
+      - runFlow:
+          when:
+            visible: "Open"
+          commands:
+            - tapOn: "Open"
+      # The dev launcher lists this Mac's server: tap it to load the app.
+      - runFlow:
+          when:
+            visible: "http://localhost:8081"
+          commands:
+            - tapOn: "http://localhost:8081"
+      - runFlow:
+          when:
+            visible: "Open"
+          commands:
+            - tapOn: "Open"
+      # The developer menu pops up a moment after the app loads on a fresh
+      # install; wait for it rather than checking too early.
+      - extendedWaitUntil:
+          visible: "Continue"
+          timeout: 30000
+          optional: true
+      - runFlow:
+          when:
+            visible: "Continue"
+          commands:
+            - tapOn: "Continue"
+      # The dev build opens its developer menu on a fresh install. Close it
+      # with a swipe: tapping inside it can hit "Reload", which leaves the
+      # app on a black screen. Real users never see this menu.
+      - repeat:
+          while:
+            visible: "Toggle performance monitor"
+          times: 3
+          commands:
+            - swipe:
+                start: "50%,55%"
+                end: "50%,98%"
+            - waitForAnimationToEnd
+# Wait until the app has settled on either the radar (already signed in) or
+# the intro / sign-in screen, before deciding whether to sign in.
+- extendedWaitUntil:
+    visible: "(Around you|You're hidden.*|you@example.com|Next|Get Started)"
+    timeout: 60000
+# A flow before this one may have paused the account (E5). Visibility lives on
+# the phone, so the reset script can't undo it: resume here.
+- runFlow:
+    when:
+      visible: "You're hidden.*"
+    commands:
+      - tapOn: "You"
+      - scrollUntilVisible:
+          element: "Resume account.*"
+          direction: DOWN
+      - tapOn: "Resume account.*"
+      - extendedWaitUntil: { visible: "Resume account\\?", timeout: 10000 }
+      - tapOn: "Resume"
+      - tapOn: "Radar"
+- runFlow:
+    when:
+      notVisible: "Around you"
+    commands:
+      - runFlow: subflows/sign_in.yaml
+# iOS / Android permission follow-ups that may still appear.
+- runFlow:
+    when:
+      visible: "Keep Only While Using"
+    commands:
+      - tapOn: "Keep Only While Using"
+- runFlow:
+    when:
+      visible: "Allow"
+    commands:
+      - tapOn: "Allow"
+- runFlow:
+    when:
+      visible: "Not Now"
+    commands:
+      - tapOn: "Not Now"
+# First open after a fresh install sometimes stays blank in the dev build
+# (open question, see USER-FLOWS.md). If the radar hasn't appeared, reopen.
+- extendedWaitUntil:
+    visible: "Around you"
+    timeout: 25000
+    optional: true
+- runFlow:
+    when:
+      notVisible: "Around you"
+    commands:
+      - stopApp
+      - launchApp:
+          clearState: false
+- extendedWaitUntil:
+    visible: "Around you"
+    timeout: 90000
+- extendedWaitUntil:
+    visible: "View Alex Mokoena.*"
+    timeout: 60000
+# Development builds show console errors as a banner over the tab bar, which
+# catches taps meant for the tabs. Real users never see it: close it.
+- repeat:
+    while:
+      visible: ".*(\\[error|Failed to load data|Console Error).*"
+    times: 4
+    commands:
+      - tapOn: ".*(\\[error|Failed to load data|Console Error).*"
+      - runFlow:
+          when:
+            visible: "Dismiss"
+          commands:
+            - tapOn: "Dismiss"

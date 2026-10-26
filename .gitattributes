@@ -1,0 +1,5 @@
+# Templates and rules are read by the tool; keep one line ending everywhere.
+*.md text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yml text eol=lf

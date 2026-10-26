@@ -1,0 +1,26 @@
+name: Lesson
+description: Something went wrong in a real project. Write down what would have caught it.
+title: "Lesson: "
+labels: ["lesson"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What went wrong
+      description: What the software did, and what the person got instead. No client names or real data.
+    validations:
+      required: true
+  - type: textarea
+    id: spot
+    attributes:
+      label: How someone would spot it
+  - type: textarea
+    id: check
+    attributes:
+      label: The check that would catch it
+      description: A plain description is fine.
+  - type: dropdown
+    id: sa
+    attributes:
+      label: South Africa specific?
+      options: ["No", "Yes"]

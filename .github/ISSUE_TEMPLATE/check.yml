@@ -1,0 +1,27 @@
+name: New check
+description: Propose a check the factory should run. Start from a lesson.
+title: "Check: "
+labels: ["check"]
+body:
+  - type: input
+    id: lesson
+    attributes:
+      label: The lesson or issue it comes from
+    validations:
+      required: true
+  - type: textarea
+    id: rule
+    attributes:
+      label: What the check looks for
+    validations:
+      required: true
+  - type: textarea
+    id: na
+    attributes:
+      label: When it should say "not applicable"
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Proven or flagged?
+      description: Proven means the tool ran something and knows. Flagged means a person must judge.
+      options: [Proven, Flagged]

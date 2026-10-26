@@ -1,0 +1,52 @@
+appId: com.example.app
+name: "S1 Two people on one phone: nothing from the first carries over (SC-003)"
+---
+- runFlow: ../_setup.yaml
+# Make sure person 1 really is the test account: an earlier failed run of
+# this flow can leave the second person signed in.
+- runFlow: ../subflows/sign_out.yaml
+- runFlow: ../subflows/sign_in.yaml
+- extendedWaitUntil: { visible: "Around you", timeout: 60000 }
+# Person 1 blocks Sam and hides.
+- tapOn:
+    text: "View Sam Dlamini.*"
+    index: 0
+- extendedWaitUntil: { visible: "Report profile", timeout: 15000 }
+- scrollUntilVisible:
+    element: "Block Sam.*"
+    direction: DOWN
+- tapOn: "Block Sam.*"
+- extendedWaitUntil: { visible: "Block Sam\\?", timeout: 10000 }
+- tapOn:
+    text: "Block"
+    index: -1
+- extendedWaitUntil: { visible: "(Around you|You're hidden.*)", timeout: 20000 }
+- tapOn: "You"
+- tapOn: "Settings.*"
+- extendedWaitUntil: { visible: ".*Visible to nearby people.*", timeout: 15000 }
+- tapOn: ".*Visible to nearby people.*"
+- tapOn: "(Go back|Back)"
+# Person 1 signs out; person 2 (Jordan) signs in on the same phone.
+- runFlow: ../subflows/sign_out.yaml
+- runFlow:
+    file: ../subflows/sign_in.yaml
+    env:
+      EMAIL: ${OTHER_EMAIL}
+      PASSWORD: ${OTHER_PASSWORD}
+- runFlow:
+    when:
+      visible: "(Allow|Allow While Using App)"
+    commands:
+      - tapOn: "(Allow|Allow While Using App)"
+# Jordan must not inherit person 1's hidden setting or block list.
+- extendedWaitUntil: { visible: "Around you", timeout: 60000 }
+- assertNotVisible: "You're hidden.*"
+- tapOn: "You"
+- tapOn: "Settings.*"
+- tapOn: "Blocked users.*"
+- extendedWaitUntil: { visible: "No blocked users", timeout: 15000 }
+# Hand the phone back to person 1 for the next flows.
+- tapOn: "(Go back|Back)"
+- tapOn: "(Go back|Back)"
+- runFlow: ../subflows/sign_out.yaml
+- runFlow: ../subflows/sign_in.yaml

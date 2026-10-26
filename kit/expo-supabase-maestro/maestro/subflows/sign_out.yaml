@@ -1,0 +1,15 @@
+# Sign out from the You tab.
+appId: com.example.app
+---
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Sign out.*"
+    direction: DOWN
+- tapOn: "Sign out.*"
+- extendedWaitUntil: { visible: "Sign out", timeout: 10000 }
+- tapOn:
+    text: "Sign out"
+    index: -1
+- extendedWaitUntil:
+    visible: "(you@example.com|Next|Get Started)"
+    timeout: 60000
