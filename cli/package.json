@@ -1,10 +1,10 @@
 {
   "name": "@next-generation-collective/factory",
   "version": "0.3.0",
-  "description": "A team of AI agent engineers in your project that cannot report work as done without proof.",
+  "description": "Checks the work you build with AI, proves it works, and learns from every builder. Built in the open, in Africa.",
   "type": "module",
   "bin": {
-    "factory": "./bin/factory.js"
+    "factory": "bin/factory.js"
   },
   "engines": {
     "node": ">=20"
