@@ -703,7 +703,7 @@ function reviewerConfig(config) {
   return config.agent.review ? { ...config, agent: normaliseAgent(config.agent.review) } : config;
 }
 
-function runReview(root, config, { artifacts, base, run }) {
+export function runReview(root, config, { artifacts, base, run }) {
   const reviewer = reviewerConfig(config);
   const stop = (problem) => {
     writeState(root, { lastReview: { at: new Date().toISOString(), passed: false, summary: problem, file: null, unproven: [] } });

@@ -47,6 +47,17 @@ Think big. The factory plans the hard parts with you, then proves every one.
 - "build a live satellite map of flood risk for every city on the continent"
 - "add end-to-end encryption to the chat app"
 
+## Use it inside your AI
+
+No commands needed. In Claude Code:
+
+```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code:
+[one line each](docs/USE-IN-YOUR-AI.md).
+
 ## What happens
 
 1. **It plans from your code.** What will change, the situations people forget (no
@@ -71,6 +82,7 @@ is right, proves it, and remembers every mistake so nobody makes it twice.
 | [The manifesto](MOVEMENT.md) | Why this matters, where the AI economy is going, and why it lasts |
 | [The website](https://factory.nextgencollective.co.za) | The movement on one page, and how companies take part |
 | [Start in 10 minutes](PILOT.md) | The guide for new builders |
+| [Use it inside your AI](docs/USE-IN-YOUR-AI.md) | Claude Code, Cursor, Codex, Gemini CLI, VS Code |
 | [Commands and checks](cli/README.md) | Every command, every check, and how to configure it |
 | [What it cannot do](docs/WHAT-IT-CANNOT-DO.md) | Read before you rely on it |
 | [Why we built it](docs/WHY.md) | Our pillars, and how to use it well in South Africa |

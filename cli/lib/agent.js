@@ -102,11 +102,14 @@ export function runAgent(root, prompt, config, promptFile) {
 
   const { file, shell } = launch(command);
   const options = { cwd: root, shell, maxBuffer: 64 * 1024 * 1024 };
+  // Inside an AI tool, our stdout is the conversation with that tool. The agent's own
+  // output goes to stderr there, so it can never corrupt it.
+  const out = process.env.FACTORY_MCP ? 2 : "inherit";
   if (call.stdin != null) {
     options.input = call.stdin;
-    options.stdio = ["pipe", "inherit", "inherit"];
+    options.stdio = ["pipe", out, "inherit"];
   } else {
-    options.stdio = "inherit";
+    options.stdio = ["inherit", out, "inherit"];
   }
   const args = shell ? call.args.map(quoteForWindows) : call.args;
   const run = spawnSync(file, args, options);

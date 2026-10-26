@@ -1,5 +1,6 @@
 import { homedir } from "node:os";
 import { banner } from "./banner.js";
+import { serve } from "./mcp.js";
 import { parse as parse_, resolve } from "node:path";
 import { createRequire } from "node:module";
 import {
@@ -22,7 +23,7 @@ const VERSION = createRequire(import.meta.url)("../package.json").version;
 
 const COMMANDS = new Set([
   "init", "spec", "approve", "plan", "tasks", "verify", "build", "review", "report",
-  "lesson", "status", "doctor", "help", "version",
+  "lesson", "status", "doctor", "help", "version", "mcp",
 ]);
 
 const VALUE_FLAGS = new Set([
@@ -82,6 +83,7 @@ Steps, if you want them one at a time
   factory doctor                  what was detected, which agent, which checks apply
   factory lesson new              turn a real failure into a dated lesson
   factory init                    answer five questions to fill factory.config.json
+  factory mcp                     run inside Claude Code, Cursor, Codex, Gemini or VS Code
 
 Options
   --ask         ask all seven questions before writing the spec
@@ -147,6 +149,8 @@ export async function main(argv) {
   }
 
   switch (command) {
+    case "mcp":
+      return serve(VERSION, root);
     case "init":
       return init(root, flags);
     case "spec":

@@ -2,6 +2,17 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
+## 0.4.0 (2026-10-26)
+
+### Added
+
+- Inside your AI: `factory mcp` lets Claude Code, Cursor, Codex, Gemini CLI and VS Code use
+  the factory directly. Ask for a change in plain words; the AI starts the job, you approve
+  the plan, it builds, and the factory proves it. See `docs/USE-IN-YOUR-AI.md`.
+- A Claude Code plugin, installed with one line, with a `/factory` command.
+- Approval stays with the person: through the AI tool's approval box where it has one,
+  otherwise the person's own words are recorded with the approval.
+
 ## 0.3.2 (2026-10-26)
 
 ### Added

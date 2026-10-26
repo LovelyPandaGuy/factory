@@ -113,7 +113,7 @@ export function setActive(root, name) {
   return config;
 }
 
-export function approve(root, name, by) {
+export function approve(root, name, by, how = null) {
   const artifacts = readArtifacts(root, name);
   if (!artifacts.spec.trim()) return null;
   const approval = {
@@ -121,6 +121,7 @@ export function approve(root, name, by) {
     hash: hashText(artifacts.spec),
     approvedAt: new Date().toISOString(),
     approvedBy: String(by || "").trim() || gitUser(root) || userInfo().username || "unknown",
+    ...(how ? { how } : {}),
   };
   mkdirSync(specPaths(root, name).dir, { recursive: true });
   writeFileSync(specPaths(root, name).approval, `${JSON.stringify(approval, null, 2)}\n`);

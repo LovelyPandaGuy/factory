@@ -19,7 +19,7 @@ const width = (text) => [...text.replace(/\u001b\[[0-9;]*m/g, "")].length;
 
 // The builder's first name, from their git identity or, on a Mac, their account's full
 // name. Nothing is sent anywhere.
-export function firstName() {
+export function fullName() {
   const ask = (cmd, args) => {
     try {
       return execFileSync(cmd, args, { encoding: "utf8", timeout: 1000, stdio: ["ignore", "pipe", "ignore"] }).trim();
@@ -27,8 +27,11 @@ export function firstName() {
       return "";
     }
   };
-  const full = ask("git", ["config", "user.name"]) || (process.platform === "darwin" ? ask("id", ["-F"]) : "");
-  return full.split(/\s+/)[0] || null;
+  return ask("git", ["config", "user.name"]) || (process.platform === "darwin" ? ask("id", ["-F"]) : "") || null;
+}
+
+export function firstName() {
+  return fullName()?.split(/\s+/)[0] || null;
 }
 
 // One small file in the builder's own settings folder, so the first welcome happens once.
