@@ -8,6 +8,17 @@ the app like a person, has a separate AI session review it, and reports only wha
 
 A [Next-Gen Collective](https://github.com/next-generation-collective) tool. Node 20 or newer.
 
+## Inside your AI
+
+In Claude Code, once:
+
+```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code:
+[one line each](https://github.com/next-generation-collective/factory/blob/main/docs/USE-IN-YOUR-AI.md).
+
 ## Try it
 
 ```bash
@@ -61,6 +72,7 @@ Nothing is committed for you.
 | `factory report` | A one-page handover |
 | `factory status`, `factory doctor` | The state of things; what was detected |
 | `factory lesson new` | Turn a real failure into a dated lesson |
+| `factory mcp` | Run inside an AI tool (Claude Code, Cursor, Codex, Gemini CLI, VS Code) |
 
 Exit codes: `0` nothing proven wrong; `1` a proven failure, or a command could not do its
 job; `2` no agent found (the prompt is saved in `.factory/prompts/`).

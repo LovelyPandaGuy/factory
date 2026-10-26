@@ -36,6 +36,10 @@ Include:
   system with real people's data.
 - **`factory.config.json`** is trusted like a `package.json` script: it names the programs
   that run. A command name containing shell syntax is refused.
+- **Inside an AI tool** (`factory mcp`, the Claude Code plugin), the factory runs only when
+  your AI calls it. Checking, starting a job and approving read and write files in your
+  project's `specs/` and `.factory/`; proving runs your own test and build commands; the
+  review starts a separate session of your AI tool, which may edit nothing but its review.
 - Nothing is sent anywhere by the factory itself. Your AI tool sends what it sends.
 
 ## Scope

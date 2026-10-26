@@ -27,6 +27,20 @@ or a real phone for you, and it does not yet sign in as two accounts by itself. 
 show what the AI saw on your machine, not what every user will see. With another agent than
 Claude Code, set `agent.journeys` or the step is skipped and says so.
 
+## Inside an AI tool, some steps work differently
+
+When you use the factory inside Claude Code, Cursor or another AI tool:
+
+- **Your approval.** Where the tool can show an approval box, you click it and the AI cannot
+  answer for you. Where it cannot, the AI must bring back your own words, and the factory
+  records them with the approval. The factory cannot prove you typed them; the box is the
+  stronger proof, and the record says which one was used.
+- **Using the app in a browser** is not part of the in-chat flow yet. The checks, tests,
+  build and independent review run; the browser step runs with `factory verify --app` in a
+  terminal.
+- **Tested so far:** Claude Code, end to end. Cursor, Codex, Gemini CLI and VS Code use the
+  same open standard but have not been tested by us yet.
+
 ## The reviewer is an AI too
 
 The independent review is a separate session of the same agent unless you set

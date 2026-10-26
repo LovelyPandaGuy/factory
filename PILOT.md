@@ -14,7 +14,21 @@ This page is everything you need. What you report shapes what we build next.
 - For step 2 only: an AI coding tool, signed in. Claude Code works best; Codex, Gemini CLI
   and OpenCode work too.
 
+## Step 0: put it inside your AI (1 minute, recommended)
+
+In Claude Code, type this once:
+
+```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+From then on you just ask for what you want, in plain words, and type `/factory` to check a
+project. Cursor, Codex, Gemini CLI and VS Code: [one line each](docs/USE-IN-YOUR-AI.md).
+The steps below work either way: in your AI's chat, or in a terminal.
+
 ## Step 1: what your project can prove (1 minute)
+
+In Claude Code, type `/factory`. Or in a terminal:
 
 ```bash
 cd your-project
@@ -40,7 +54,8 @@ check will be proven), and waits for your yes. Then it plans, builds, runs your 
 uses the app if it can, and a separate AI session reviews the change. You get a summary
 you can paste to your team.
 
-It found nothing to fix? Give it a small real job instead:
+It found nothing to fix? Give it a small real job instead. Inside your AI, just ask for it.
+In a terminal:
 
 ```bash
 npx @next-generation-collective/factory "the small change you were going to make anyway"

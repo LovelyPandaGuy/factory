@@ -56,6 +56,9 @@ code --add-mcp '{"name":"factory","command":"npx","args":["-y","@next-generation
    OpenCode installed on your computer; without one, the proof says the review did not run.
 7. You get the proof in `specs/` and a one-page report in `.factory/report.md`.
 
+Using the app in a real browser, with screenshots, is not part of the in-chat flow yet. Run
+`npx @next-generation-collective/factory verify --app` in a terminal for that step.
+
 ## Tested so far
 
 Tested end to end in Claude Code on 2026-10-26: a plain request, the person's approval, the

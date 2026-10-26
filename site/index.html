@@ -169,6 +169,13 @@
   @media (max-width: 359px) { nav .wrap { gap: 8px; } nav .brand { font-size: 14px; } }
   @media (max-width: 399px) { nav .brand { font-size: 15px; gap: 8px; } nav .brand img { height: 26px; } nav .btn { padding: 9px 14px; font-size: 14px; } }
 
+  .session { margin-top: 24px; position: static; }
+  .session pre { white-space: pre-wrap; }
+  .t-you { color: #fff; font-weight: 700; } .t-gold { color: var(--gold); } .t-bad { color: #ff7b72; }
+  .t-box { display: block; border: 1px solid var(--gold); border-radius: 10px; padding: 10px 14px; margin: 4px 0; background: rgba(245, 166, 35, .06); }
+  .t-btn { display: inline-block; background: var(--gold); color: #111; font-weight: 700; padding: 0 10px; border-radius: 6px; margin-top: 6px; }
+  .t-seal { display: inline-block; background: var(--gold); color: #111; font-weight: 700; padding: 0 10px; border-radius: 999px; }
+
   /* Companies */
   .offer { background: var(--ink); color: var(--canvas); border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
   .offer h3 { font-size: 26px; }
@@ -308,6 +315,27 @@
         <a class="proof-more" href="https://github.com/next-generation-collective/factory/blob/main/docs/USE-IN-YOUR-AI.md">See the lines →</a>
       </div>
     </div>
+    <figure class="term session reveal" aria-label="Preview of a session inside Claude Code">
+      <div class="term-bar"><i></i><i></i><i></i><span>Preview of a session in Claude Code · the steps of a real test run, shortened</span></div>
+<pre><span class="t-you">&gt; Add a discount: orders over 100 get 10% off.</span>
+
+<span class="t-gold">Welcome to Next-Gen Factory, Thandi. You are one of the builders of the AI economy.</span>
+
+Two things to decide: does exactly 100 get the discount? Round to cents?
+
+<span class="t-box"><b>Approve this plan before anything is built?</b>
+5 checks: 25 stays 25 · exactly 100 stays 100 · 200 becomes 180 · empty is 0 · 101.11 becomes 91.00
+<span class="t-btn">Approve and build</span>  Not yet</span>
+<span class="t-ok">Approved by Thandi Nkosi.</span>
+
+Building it...
+<span class="t-bad">NOT DONE. 1 of 6 tests failed: 101.11 got 90.999</span>
+The rounding was in the wrong place. Fixing it.
+<span class="t-ok">DONE. 6 of 6 tests pass. No secrets, no personal data.</span>
+Independent review by a separate session: <span class="t-ok">approve</span>
+
+<span class="t-seal">✓ Proven by Next-Gen</span>  What I got wrong first: the rounding. The factory caught it.</pre>
+    </figure>
   </div>
 </section>
 

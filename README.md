@@ -7,6 +7,7 @@
 <p align="center">
   <a href="MOVEMENT.md">The manifesto</a> ·
   <a href="PILOT.md">Start in 10 minutes</a> ·
+  <a href="docs/USE-IN-YOUR-AI.md">Inside your AI</a> ·
   <a href="FOUNDING-BUILDERS.md">Founding Builders</a>
 </p>
 
@@ -23,7 +24,18 @@ for every builder after you.
 We are building it in the open, in Africa, toward one million proven builds by African
 builders. [Read why.](MOVEMENT.md)
 
-## Try it
+## Start inside your AI
+
+No commands needed. In Claude Code:
+
+```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code:
+[one line each](docs/USE-IN-YOUR-AI.md).
+
+## Or in a terminal
 
 In any project folder:
 
@@ -47,17 +59,6 @@ Think big. The factory plans the hard parts with you, then proves every one.
 - "build a live satellite map of flood risk for every city on the continent"
 - "add end-to-end encryption to the chat app"
 
-## Use it inside your AI
-
-No commands needed. In Claude Code:
-
-```
-/plugin install factory --marketplace next-generation-collective/factory
-```
-
-Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code:
-[one line each](docs/USE-IN-YOUR-AI.md).
-
 ## What happens
 
 1. **It plans from your code.** What will change, the situations people forget (no
@@ -66,7 +67,7 @@ Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code
 3. **Your AI builds it.**
 4. **The factory checks it.** It runs your tests and build. Failures go back to the builder.
 5. **It uses the app** in a real browser, the way a person would, with a screenshot for every
-   check.
+   check. (In a terminal job for now; inside your AI, this step comes next.)
 6. **A second AI reviews it,** in a separate session that never saw how the first one thought.
 7. **You get the proof,** and you decide whether to keep the change.
 
