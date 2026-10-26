@@ -2,6 +2,13 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
+## 0.3.2 (2026-10-26)
+
+### Added
+
+- The Next-Gen mark in the terminal: when you start the factory it greets you with the NG
+  mark in gold, its name and version, and "Africa builds."
+
 ## 0.3.1 (2026-10-26)
 
 ### Fixed

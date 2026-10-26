@@ -1,4 +1,5 @@
 import { homedir } from "node:os";
+import { banner } from "./banner.js";
 import { parse as parse_, resolve } from "node:path";
 import { createRequire } from "node:module";
 import {
@@ -132,7 +133,7 @@ export async function main(argv) {
       console.error(refusal);
       return 1;
     }
-    if (process.stderr.isTTY) process.stderr.write("Reading your project...\n\n");
+    if (process.stdout.isTTY) console.log(banner(VERSION, root));
   }
 
   if (!command) return start(root, flags);
