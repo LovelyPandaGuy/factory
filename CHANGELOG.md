@@ -2,7 +2,18 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
-## 0.3.0 (unreleased)
+## 0.3.1 (2026-10-26)
+
+### Fixed
+
+- Run from your home folder or the top of the disk, the factory read every file on the
+  computer and showed nothing for minutes. It now says in plain words to go into a project
+  folder first.
+- It says "Reading your project..." straight away, so you know it has started.
+- Plain wording in its messages: no em dashes, and "1 thing" or "2 things" instead of
+  "thing(s)".
+
+## 0.3.0 (2026-10-26)
 
 The first public release, as `@next-generation-collective/factory`.
 

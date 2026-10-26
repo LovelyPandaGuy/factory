@@ -1,3 +1,5 @@
+import { homedir } from "node:os";
+import { parse as parse_, resolve } from "node:path";
 import { createRequire } from "node:module";
 import {
   approveCommand,
@@ -95,6 +97,20 @@ Nothing is written into your project until you start a job. Nothing is called
 done until the checks pass, and it never says "bug-free" or "compliant".`);
 }
 
+// Your home folder or the top of the disk is never one project. Reading it means reading
+// every file on the computer, which takes minutes and shows nothing.
+export function notAProjectFolder(root, home = homedir()) {
+  const here = resolve(root);
+  if (here !== resolve(home) && here !== parse_(here).root) return null;
+  return [
+    `This is ${here === resolve(home) ? "your home folder" : "the top of your disk"}, not a project.`,
+    "Go into a project folder first, then run it again. For example:",
+    "",
+    "  cd my-project",
+    "  npx @next-generation-collective/factory",
+  ].join("\n");
+}
+
 export async function main(argv) {
   const { flags, positional } = parse(argv);
   const root = process.cwd();
@@ -108,6 +124,15 @@ export async function main(argv) {
   if (flags.help || command === "help") {
     help();
     return 0;
+  }
+
+  if (!command || (!COMMANDS.has(command) && (rest.length > 0 || /\s/.test(command)))) {
+    const refusal = notAProjectFolder(root);
+    if (refusal) {
+      console.error(refusal);
+      return 1;
+    }
+    if (process.stderr.isTTY) process.stderr.write("Reading your project...\n\n");
   }
 
   if (!command) return start(root, flags);
