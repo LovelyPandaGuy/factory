@@ -57,9 +57,9 @@
   .hero h1 em { font-style: normal; color: var(--gold); }
   .hero .lead { font-size: clamp(19px, 2.2vw, 22px); color: rgba(253, 251, 247, .78); max-width: 34ch; margin-top: 24px; }
   .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-  .cmd { margin-top: 28px; display: flex; align-items: center; gap: 12px; background: rgba(253, 251, 247, .05); border: 1px solid var(--line-dark); border-radius: var(--r); padding: 12px 12px 12px 18px; max-width: 520px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 15px; color: var(--canvas); }
+  .cmd { margin-top: 28px; display: flex; align-items: center; gap: 12px; background: rgba(253, 251, 247, .05); border: 1px solid var(--line-dark); border-radius: var(--r); padding: 12px 12px 12px 18px; max-width: 560px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 15px; color: var(--canvas); }
   .cmd span.p { color: var(--gold); }
-  .cmd code { flex: 1; overflow-x: auto; white-space: nowrap; }
+  .cmd code { flex: 1; white-space: normal; overflow-wrap: anywhere; line-height: 1.5; }
   .cmd button { flex: none; background: transparent; color: rgba(253, 251, 247, .7); border: 1px solid var(--line-dark); border-radius: 8px; padding: 6px 12px; font: 600 13px "Hanken Grotesk"; cursor: pointer; transition: color .3s var(--ease); }
   .cmd button:hover { color: var(--canvas); }
   @media (max-width: 479px) { .cmd { font-size: 13px; padding-left: 14px; gap: 8px; } .cmd code { white-space: normal; overflow-wrap: anywhere; } .proof-grid .term pre { font-size: 11px; padding: 16px 14px; white-space: pre-wrap; } .t-detail { display: none; } }
@@ -151,6 +151,12 @@
   .week .row span { color: rgba(253, 251, 247, .78); }
   .note { font-size: 14px; color: var(--ink-faint); margin-top: 16px; }
 
+  .cmd-label { margin-top: 28px; font-size: 15px; color: rgba(253, 251, 247, .7); }
+  .cmd-label + .cmd { margin-top: 10px; }
+  .also { margin-top: 12px; font-size: 14px; color: rgba(253, 251, 247, .55); max-width: 560px; }
+  .also a { color: var(--gold); font-weight: 600; }
+  .also code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; color: rgba(253, 251, 247, .75); overflow-wrap: anywhere; }
+
   /* Ask */
   .ask { margin-top: 14px; font-size: 15px; color: rgba(253, 251, 247, .62); max-width: 560px; min-height: 3.3em; }
   .ask-label { color: var(--gold); font-weight: 600; }
@@ -231,11 +237,13 @@
       <div class="eyebrow">Next-Gen Factory · built in the open, in Africa</div>
       <h1>Africa <em>builds.</em></h1>
       <p class="lead">AI has made software almost free to create. It has not made it trustworthy. We are building the proof layer for AI-built software, with the youngest continent on earth.</p>
-      <div class="cmd" role="group" aria-label="Install command">
-        <span class="p">$</span><code id="cmd1">npx @next-generation-collective/factory</code>
+      <p class="cmd-label">Add it to Claude Code. Type this once:</p>
+      <div class="cmd" role="group" aria-label="Add to Claude Code">
+        <span class="p">&gt;</span><code id="cmd1">/plugin install factory --marketplace next-generation-collective/factory</code>
         <button type="button" data-copy="cmd1">Copy</button>
       </div>
-      <p class="ask"><span class="ask-label">Then tell it what to build:</span> <span class="ask-text" id="ask">"add real-time fraud detection to the payments API"</span></p>
+      <p class="also">Or <a href="https://cursor.com/en/install-mcp?name=factory&amp;config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBuZXh0LWdlbmVyYXRpb24tY29sbGVjdGl2ZS9mYWN0b3J5QGxhdGVzdCIsIm1jcCJdfQ==">add it to Cursor</a> in one click, or run it in a terminal: <code>npx @next-generation-collective/factory</code></p>
+      <p class="ask"><span class="ask-label">Then just ask:</span> <span class="ask-text" id="ask">"add real-time fraud detection to the payments API"</span></p>
       <div class="cta">
         <a class="btn btn-gold" href="#founding">Become a Founding Builder</a>
         <a class="btn btn-ghost" href="#proof">See how it works</a>
@@ -470,7 +478,7 @@ Independent review by a separate session: <span class="t-ok">approve</span>
     <div class="section-head reveal">
       <div class="eyebrow">Who we are</div>
       <h2>Built by Next-Gen Collective.</h2>
-      <p>A youth-driven movement in South Africa, mobilising young Africans through entrepreneurship, AI and innovation, policy and wealth creation. Founded by Sibusiso Mngomezulu. The factory is how we put the movement to work. <a href="https://nextgencollective.co.za">Meet the movement</a>.</p>
+      <p>A youth-driven movement in South Africa, mobilising young Africans through entrepreneurship, AI and innovation, policy and wealth creation. The factory is how we put the movement to work. <a href="https://nextgencollective.co.za">Meet the movement</a>.</p>
     </div>
     <div class="partners">
       <div class="card reveal"><h3>Funders</h3><p>Back outcomes you can check: young builders with proven work, counted in public.</p></div>
@@ -485,7 +493,7 @@ Independent review by a separate session: <span class="t-ok">approve</span>
     <div class="eyebrow">Start with your next task</div>
     <h2>Africa <em>builds.</em></h2>
     <div class="cmd" role="group" aria-label="Install command">
-      <span class="p">$</span><code id="cmd2">npx @next-generation-collective/factory</code>
+      <span class="p">&gt;</span><code id="cmd2">/plugin install factory --marketplace next-generation-collective/factory</code>
       <button type="button" data-copy="cmd2">Copy</button>
     </div>
     <div class="cta">

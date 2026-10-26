@@ -100,7 +100,7 @@ covered by the MIT licence; see [docs/BRAND.md](docs/BRAND.md).
 ## Who we are
 
 Next-Gen Factory is built by [Next-Gen Collective](https://nextgencollective.co.za), a
-youth-driven movement in South Africa, founded by Sibusiso Mngomezulu. The factory is how
+youth-driven movement in South Africa. The factory is how
 we put the movement to work.
 
 <p align="center">Next-Gen Collective · Africa as builder, not buyer.</p>
