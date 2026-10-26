@@ -323,26 +323,26 @@
         <a class="proof-more" href="https://github.com/next-generation-collective/factory/blob/main/docs/USE-IN-YOUR-AI.md">See the lines →</a>
       </div>
     </div>
-    <figure class="term session reveal" aria-label="Preview of a session inside Claude Code">
-      <div class="term-bar"><i></i><i></i><i></i><span>Preview of a session in Claude Code · the steps of a real test run, shortened</span></div>
-<pre><span class="t-you">&gt; Add a discount: orders over 100 get 10% off.</span>
+    <figure class="term session reveal" aria-label="Illustration of a session inside Claude Code">
+      <div class="term-bar"><i></i><i></i><i></i><span>Illustration of a session in Claude Code</span></div>
+<pre><span class="t-you">&gt; Flag a payment as possible fraud when the same card pays in two cities within 10 minutes.</span>
 
 <span class="t-gold">Welcome to Next-Gen Factory, Thandi. You are one of the builders of the AI economy.</span>
 
-Two things to decide: does exactly 100 get the discount? Round to cents?
+Two things to decide: how far apart counts as two cities? Should a flagged payment be blocked, or held for review?
 
 <span class="t-box"><b>Approve this plan before anything is built?</b>
-5 checks: 25 stays 25 · exactly 100 stays 100 · 200 becomes 180 · empty is 0 · 101.11 becomes 91.00
+5 checks: Johannesburg then Lagos 5 minutes apart is flagged · the same city twice is allowed · 11 minutes apart is allowed · a payment with no location is not flagged, and is logged · a flagged payment is held, never lost
 <span class="t-btn">Approve and build</span>  Not yet</span>
 <span class="t-ok">Approved by Thandi Nkosi.</span>
 
 Building it...
-<span class="t-bad">NOT DONE. 1 of 6 tests failed: 101.11 got 90.999</span>
-The rounding was in the wrong place. Fixing it.
-<span class="t-ok">DONE. 6 of 6 tests pass. No secrets, no personal data.</span>
+<span class="t-bad">NOT DONE. 1 of 9 tests failed: a payment with no location crashed the check</span>
+Missing locations were not handled. Fixing it.
+<span class="t-ok">DONE. 9 of 9 tests pass. No secrets, no card numbers in the logs.</span>
 Independent review by a separate session: <span class="t-ok">approve</span>
 
-<span class="t-seal">✓ Proven by Next-Gen</span>  What I got wrong first: the rounding. The factory caught it.</pre>
+<span class="t-seal">✓ Proven by Next-Gen</span>  What I got wrong first: payments with no location. The factory caught it.</pre>
     </figure>
   </div>
 </section>
