@@ -935,6 +935,7 @@ export function build(root, opts = {}) {
         writeState(root, { lastBuild: new Date().toISOString() });
         recordProven({ caught: attempt > 1 ? 1 : 0 });
         send("prove", { mode: "cli", ok: true, attempts: attempt, caught: attempt > 1, verdict: reviewed ? "approve" : "none" }, PACKAGE_VERSION);
+        console.log(colors.dim('Was it useful? Tell us in one line: factory feedback "..."'));
         console.log(colors.green(`DONE: the checks passed${reviewed ? " and a separate session approved the change" : ""}. Proof: ${rel(root, run.mdFile)}`));
         return 0;
       }

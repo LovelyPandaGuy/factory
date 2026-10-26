@@ -27,11 +27,12 @@ only your answer.
 | Field | Example | Why |
 |---|---|---|
 | A random install ID | `3f2a...` | To count builders without knowing who they are |
-| Event | `check`, `job_start`, `approve`, `prove`, `review`, `share`, `run` | To see where jobs stop |
+| Event | `check`, `job_start`, `approve`, `prove`, `review`, `share`, `run`, `feedback` | To see where jobs stop |
 | Version, system, Node major version | `0.5.0`, `darwin`, `22` | To fix what breaks where |
 | Where you run it | `cli`, or the AI tool's name such as `claude-code` | To know which tools to support first |
 | Kind of project | `next`, `expo`, `python` | To know which checks matter |
 | Check results as counts, and which checks failed | `{"pass":5,"fail":1}`, `["tests"]` | To know what the factory catches |
+| The kind of feedback you gave, if you used `factory feedback` | `loved`, `false-alarm`, `confusing`, `wish` | To see what to fix first; your words go only to the GitHub form you submit |
 | How a job ended | done or not, attempts, whether a mistake was caught, review verdict, approval by box or chat | To know if it helps |
 
 Anything else is dropped on your computer before sending, by `cli/lib/telemetry.js`, which

@@ -10,7 +10,7 @@ import { analyseProject } from "./analyse.js";
 import { approvalView } from "./approval.js";
 import { firstName, fullName, isFirstVisit, rememberVisit } from "./banner.js";
 import { checkCounts, ensureConfig, report, runReview } from "./commands.js";
-import { needsAnswer, recordProven, send as track, setSharing, sharing } from "./telemetry.js";
+import { feedbackUrl, guessFeeling, needsAnswer, recordProven, send as track, setSharing, sharing } from "./telemetry.js";
 import { paths, readConfig, readState, writeState } from "./config.js";
 import { composeBuildPrompt, composeSpecPrompt } from "./prompts.js";
 import { isGitRepo, reviewBase } from "./review.js";
@@ -82,6 +82,17 @@ const TOOLS = [
     },
   },
   {
+    name: "factory_feedback",
+    description:
+      "When the person says something about how the factory did (good, wrong, confusing, or a wish), offer to send it to Next-Gen. Returns a filled-in feedback link for the person to open and submit; nothing is sent without them.",
+    inputSchema: {
+      type: "object",
+      properties: { text: { type: "string", description: "The person's feedback, in their words." } },
+      required: ["text"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "factory_review",
     description:
       "The independent review: a separate AI session that never saw how you worked checks the change against the approved spec. Run it after factory_prove says DONE. It can take a few minutes.",
@@ -138,6 +149,12 @@ export function createServer({ root = process.cwd(), send }) {
       setSharing(share === true);
       track("share", { ok: sharing(), mode: "mcp", client }, VERSION);
       return text(share === true ? "Thank you. Anonymous counts will be shared. The person can stop any time with: factory share off" : "Nothing will be shared. Nothing leaves this computer.");
+    },
+
+    factory_feedback({ text: words }) {
+      const feeling = guessFeeling(words);
+      track("feedback", { mode: "mcp", client, feeling: feeling ?? "other" }, VERSION);
+      return text(`Give the person this link. It opens their feedback filled in on GitHub; they check it and press Submit:\n${feedbackUrl(words, feeling)}`);
     },
 
     factory_check() {
@@ -270,7 +287,9 @@ export function createServer({ root = process.cwd(), send }) {
         );
       }
       track("review", { mode: "mcp", client, verdict: result.passed ? "approve" : "changes" }, VERSION);
-      const verdict = result.passed ? "Proven by Next-Gen: the checks passed and a separate session approved the change." : `NOT DONE: ${result.summary}`;
+      const verdict = result.passed
+        ? "Proven by Next-Gen: the checks passed and a separate session approved the change.\nAfter reporting, ask the person once: was the factory useful this time? If they say anything, offer factory_feedback."
+        : `NOT DONE: ${result.summary}`;
       return text([verdict, result.file ? `Review: ${result.file}` : "", reportText].filter(Boolean).join("\n"));
     },
   };

@@ -11,6 +11,11 @@ Newest first. Dates are YYYY-MM-DD.
 - Anonymous counts, only if you say yes: asked once, `factory share on|off` to change.
   Never code, file names or personal details. See `docs/TELEMETRY.md`.
 - Inside your AI: `factory_share`, so your AI asks you the same question once.
+- `factory feedback "..."`: one line of feedback opens a filled-in GitHub form for you to submit.
+  Inside your AI, `factory_feedback` does the same, and your AI asks once after a proven build
+  whether the factory was useful.
+- Claude Code plugin: tells Claude at the start of every session to use the factory for any
+  change, after a real test where a plain request skipped it.
 
 ## 0.4.0 (2026-10-26)
 

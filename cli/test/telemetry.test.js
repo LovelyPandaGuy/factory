@@ -66,3 +66,14 @@ test("telemetry: the builder's own progress is kept on their computer", (t) => {
   assert.equal(stats().proven, 2);
   assert.equal(progressLine(stats(), now), "2 proven builds. The factory caught 1 mistake for you this week.");
 });
+
+test("feedback: the builder's words become a filled-in GitHub form, never sent for them", async () => {
+  const { feedbackUrl, guessFeeling } = await import("../lib/telemetry.js");
+  assert.equal(guessFeeling("it caught a secret I missed, amazing"), "loved");
+  assert.equal(guessFeeling("false alarm on my test password"), "false-alarm");
+  assert.equal(guessFeeling("I wish it worked with Cursor"), "wish");
+  const url = new URL(feedbackUrl("I wish it worked with Cursor", "wish"));
+  assert.equal(url.searchParams.get("template"), "feedback.yml");
+  assert.equal(url.searchParams.get("what"), "I wish it worked with Cursor");
+  assert.match(url.searchParams.get("kind"), /^Wish/);
+});

@@ -1,0 +1,24 @@
+name: Quick feedback
+description: One line on how the factory did. Good or bad, it decides what we fix next.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback?
+      options:
+        - "Loved it: it caught something or saved me time"
+        - "False alarm: it flagged something that was fine"
+        - "Confusing: I did not understand what it wanted"
+        - "Wish: I want it to do something it does not"
+        - "Other"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Tell us in your own words
+      description: Never paste code, credentials, client data or real people's details.
+    validations:
+      required: true

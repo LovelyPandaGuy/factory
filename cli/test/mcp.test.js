@@ -51,7 +51,7 @@ test("mcp: the AI tool sees the server, its instructions and its tools", async (
   assert.equal(init.serverInfo.title, "Next-Gen Factory");
   assert.match(init.instructions, /The person approves the spec, not you/);
   const names = (await call(1, "tools/list")).result.tools.map((tool) => tool.name);
-  assert.deepEqual(names, ["factory_check", "factory_start", "factory_approve", "factory_prove", "factory_share", "factory_review"]);
+  assert.deepEqual(names, ["factory_check", "factory_start", "factory_approve", "factory_prove", "factory_share", "factory_feedback", "factory_review"]);
 });
 
 test("mcp: an unknown protocol version gets one the server speaks", async (t) => {

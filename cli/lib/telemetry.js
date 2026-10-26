@@ -57,7 +57,7 @@ export const SHARE_QUESTION =
   "Help make the factory better for every builder? It shares anonymous counts: which checks ran and what they caught. Never your code, file names or personal details. You can change this any time with: factory share off";
 
 // Counts only. Anything else a caller passes is dropped here, before it can leave the machine.
-const ALLOWED = new Set(["mode", "client", "kind", "status", "via", "ok", "attempts", "caught", "verdict", "checks", "failed", "minutes"]);
+const ALLOWED = new Set(["mode", "client", "kind", "status", "via", "ok", "attempts", "caught", "verdict", "checks", "failed", "minutes", "feeling"]);
 
 function clean(props) {
   const out = {};
@@ -111,6 +111,31 @@ async function post(event, props, version, { fetchImpl = globalThis.fetch } = {}
   } catch {
     return false;
   }
+}
+
+// A one-line feedback form, filled in, on GitHub. Opening it sends nothing; the builder
+// reads it and chooses whether to submit.
+const FEELINGS = {
+  loved: "Loved it: it caught something or saved me time",
+  "false-alarm": "False alarm: it flagged something that was fine",
+  confusing: "Confusing: I did not understand what it wanted",
+  wish: "Wish: I want it to do something it does not",
+};
+
+export function feedbackUrl(text, feeling = null) {
+  const words = String(text ?? "").trim();
+  const params = new URLSearchParams({ template: "feedback.yml", title: `Feedback: ${words.slice(0, 60)}`, what: words });
+  if (FEELINGS[feeling]) params.set("kind", FEELINGS[feeling]);
+  return `https://github.com/next-generation-collective/factory/issues/new?${params}`;
+}
+
+export function guessFeeling(text) {
+  const t = String(text ?? "").toLowerCase();
+  if (/false alarm|not a real|wrong|fine actually|flagged .* fine/.test(t)) return "false-alarm";
+  if (/confus|did ?n.t understand|unclear|lost/.test(t)) return "confusing";
+  if (/wish|would love|please add|want it to|could it/.test(t)) return "wish";
+  if (/love|great|saved|caught|amazing|helpful|useful/.test(t)) return "loved";
+  return null;
 }
 
 // The builder's own progress, kept on their computer whether or not they share anything.

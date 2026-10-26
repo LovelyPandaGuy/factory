@@ -1,7 +1,8 @@
 import { homedir } from "node:os";
 import { banner } from "./banner.js";
 import { serve } from "./mcp.js";
-import { needsAnswer, send, setSharing, settings, SHARE_QUESTION, sharing, blockedByEnvironment } from "./telemetry.js";
+import { feedbackUrl, guessFeeling, needsAnswer, send, setSharing, settings, SHARE_QUESTION, sharing, blockedByEnvironment } from "./telemetry.js";
+import { spawn } from "node:child_process";
 import { createInterface as askLine } from "node:readline/promises";
 import { parse as parse_, resolve } from "node:path";
 import { createRequire } from "node:module";
@@ -25,7 +26,7 @@ const VERSION = createRequire(import.meta.url)("../package.json").version;
 
 const COMMANDS = new Set([
   "init", "spec", "approve", "plan", "tasks", "verify", "build", "review", "report",
-  "lesson", "status", "doctor", "help", "version", "mcp", "share",
+  "lesson", "status", "doctor", "help", "version", "mcp", "share", "feedback",
 ]);
 
 const VALUE_FLAGS = new Set([
@@ -87,6 +88,7 @@ Steps, if you want them one at a time
   factory init                    answer five questions to fill factory.config.json
   factory mcp                     run inside Claude Code, Cursor, Codex, Gemini or VS Code
   factory share on|off            share anonymous counts with Next-Gen, or stop
+  factory feedback "..."          tell Next-Gen in one line what was good or wrong
 
 Options
   --ask         ask all seven questions before writing the spec
@@ -101,6 +103,25 @@ Options
 
 Nothing is written into your project until you start a job. Nothing is called
 done until the checks pass, and it never says "bug-free" or "compliant".`);
+}
+
+function feedbackCommand(text) {
+  if (!text.trim()) {
+    console.error('Tell us in one line, for example: factory feedback "it caught a secret I missed"');
+    return 1;
+  }
+  const feeling = guessFeeling(text);
+  const url = feedbackUrl(text, feeling);
+  send("feedback", { feeling: feeling ?? "other" }, VERSION);
+  const opener = process.platform === "darwin" ? "open" : process.platform === "win32" ? "explorer" : "xdg-open";
+  try {
+    spawn(opener, [url], { stdio: "ignore", detached: true }).on("error", () => {}).unref();
+  } catch {
+    // No browser here; the link below still works.
+  }
+  console.log("Thank you. Your feedback is filled in on GitHub; check it and press Submit:");
+  console.log(url);
+  return 0;
 }
 
 function shareCommand(choice) {
@@ -176,6 +197,8 @@ export async function main(argv) {
   switch (command) {
     case "share":
       return shareCommand(rest[0]);
+    case "feedback":
+      return feedbackCommand(rest.join(" "));
     case "mcp":
       return serve(VERSION, root);
     case "init":
