@@ -20,11 +20,13 @@ every one linked to its evidence.
 The first 100 are the **Founding Builders**. They will be remembered as the people who proved
 Africa could build for the world.
 
-**Start with your next task:**
+**Start with your next task.** Add it to Claude Code once:
 
-```bash
-npx @next-generation-collective/factory
 ```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+Then ask for what you want. Other AI tools: [one line each](docs/USE-IN-YOUR-AI.md).
 
 ## Why now
 
@@ -145,14 +147,12 @@ becomes the proof the movement stands on.
 
 ### A Founding Builder's week
 
-**Every task:**
+**Every task:** ask your AI for it, in plain words.
 
-```bash
-npx @next-generation-collective/factory "add real-time fraud detection to the payments API"
-```
+> Add real-time fraud detection to the payments API.
 
-Read the short plan, press `y`, and the factory builds, checks, uses the app and has the work
-reviewed. Read the change and commit it yourself.
+Read the short plan, approve it, and the factory builds, checks and has the work reviewed.
+Read the change and commit it yourself.
 
 **When it catches something:** write the lesson down with
 `npx @next-generation-collective/factory lesson new`, then share it through the

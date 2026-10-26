@@ -11,7 +11,13 @@
   <a href="FOUNDING-BUILDERS.md">Founding Builders</a>
 </p>
 
-<p align="center">Companies and funders: <a href="https://factory.nextgencollective.co.za/#companies">factory.nextgencollective.co.za</a></p>
+<p align="center"><b>Add it to Claude Code. Type this once:</b></p>
+
+```
+/plugin install factory --marketplace next-generation-collective/factory
+```
+
+<p align="center">Then just ask for what you want. Cursor, Codex, Gemini CLI and VS Code: <a href="docs/USE-IN-YOUR-AI.md">one line each</a>.<br>Companies and funders: <a href="https://next-generation-collective.github.io/factory/#companies">the website</a>.</p>
 
 ---
 
@@ -81,7 +87,7 @@ is right, proves it, and remembers every mistake so nobody makes it twice.
 | | |
 |---|---|
 | [The manifesto](MOVEMENT.md) | Why this matters, where the AI economy is going, and why it lasts |
-| [The website](https://factory.nextgencollective.co.za) | The movement on one page, and how companies take part |
+| [The website](https://next-generation-collective.github.io/factory/) | The movement on one page, and how companies take part |
 | [Start in 10 minutes](PILOT.md) | The guide for new builders |
 | [Use it inside your AI](docs/USE-IN-YOUR-AI.md) | Claude Code, Cursor, Codex, Gemini CLI, VS Code |
 | [Commands and checks](cli/README.md) | Every command, every check, and how to configure it |
