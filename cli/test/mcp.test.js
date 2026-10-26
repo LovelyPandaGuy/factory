@@ -45,13 +45,13 @@ function writeSpec(root, text = "# Spec\n\n## Acceptance checks\n\n- AC1: add(1,
   writeFileSync(join(dir, "spec.md"), text);
 }
 
-test("mcp: the AI tool sees the server, its instructions and the five tools", async (t) => {
+test("mcp: the AI tool sees the server, its instructions and its tools", async (t) => {
   const { ready, call } = client(temp(t));
   const init = (await ready).result;
   assert.equal(init.serverInfo.title, "Next-Gen Factory");
   assert.match(init.instructions, /The person approves the spec, not you/);
   const names = (await call(1, "tools/list")).result.tools.map((tool) => tool.name);
-  assert.deepEqual(names, ["factory_check", "factory_start", "factory_approve", "factory_prove", "factory_review"]);
+  assert.deepEqual(names, ["factory_check", "factory_start", "factory_approve", "factory_prove", "factory_share", "factory_review"]);
 });
 
 test("mcp: an unknown protocol version gets one the server speaks", async (t) => {

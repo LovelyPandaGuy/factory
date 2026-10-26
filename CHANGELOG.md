@@ -2,6 +2,16 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
+## 0.5.0 (2026-10-26)
+
+### Added
+
+- Your progress: "Welcome back" now shows your proven builds and the mistakes the factory
+  caught for you this week. Kept on your computer only.
+- Anonymous counts, only if you say yes: asked once, `factory share on|off` to change.
+  Never code, file names or personal details. See `docs/TELEMETRY.md`.
+- Inside your AI: `factory_share`, so your AI asks you the same question once.
+
 ## 0.4.0 (2026-10-26)
 
 ### Added

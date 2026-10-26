@@ -40,7 +40,9 @@ Include:
   your AI calls it. Checking, starting a job and approving read and write files in your
   project's `specs/` and `.factory/`; proving runs your own test and build commands; the
   review starts a separate session of your AI tool, which may edit nothing but its review.
-- Nothing is sent anywhere by the factory itself. Your AI tool sends what it sends.
+- **Anonymous counts** are sent to Next-Gen only if you said yes when asked; never code, file
+  names or personal details. See [docs/TELEMETRY.md](docs/TELEMETRY.md). Otherwise nothing is
+  sent anywhere by the factory itself. Your AI tool sends what it sends.
 
 ## Scope
 

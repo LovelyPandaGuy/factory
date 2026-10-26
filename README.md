@@ -85,6 +85,7 @@ is right, proves it, and remembers every mistake so nobody makes it twice.
 | [Start in 10 minutes](PILOT.md) | The guide for new builders |
 | [Use it inside your AI](docs/USE-IN-YOUR-AI.md) | Claude Code, Cursor, Codex, Gemini CLI, VS Code |
 | [Commands and checks](cli/README.md) | Every command, every check, and how to configure it |
+| [What it shares](docs/TELEMETRY.md) | Anonymous counts, only if you say yes |
 | [What it cannot do](docs/WHAT-IT-CANNOT-DO.md) | Read before you rely on it |
 | [Why we built it](docs/WHY.md) | Our pillars, and how to use it well in South Africa |
 | [How we work](docs/HOW-WE-WORK.md) | The method the factory is built on |

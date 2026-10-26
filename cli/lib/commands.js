@@ -43,6 +43,10 @@ import {
 } from "./spec.js";
 import { formatResults, label, specEvidenceDir, verify } from "./verify.js";
 import { colors, isTestFile, rel, walk } from "./util.js";
+import { recordProven, send } from "./telemetry.js";
+import { createRequire } from "node:module";
+const PACKAGE_VERSION = createRequire(import.meta.url)("../package.json").version;
+
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const TEMPLATES = join(HERE, "..", "template");
@@ -487,6 +491,7 @@ export async function firstRun(root) {
 
   const config = readConfig(root);
   const run = verify(root, { deep: false, config, save: configured });
+  send("check", checkCounts(run, { mode: "cli" }), PACKAGE_VERSION);
 
   console.log(`${colors.bold(config.name)}  ${colors.dim(`(${analysis.label})`)}`);
   console.log("");
@@ -928,6 +933,8 @@ export function build(root, opts = {}) {
 
       if (!reviewed || reviewed.passed) {
         writeState(root, { lastBuild: new Date().toISOString() });
+        recordProven({ caught: attempt > 1 ? 1 : 0 });
+        send("prove", { mode: "cli", ok: true, attempts: attempt, caught: attempt > 1, verdict: reviewed ? "approve" : "none" }, PACKAGE_VERSION);
         console.log(colors.green(`DONE: the checks passed${reviewed ? " and a separate session approved the change" : ""}. Proof: ${rel(root, run.mdFile)}`));
         return 0;
       }
@@ -943,7 +950,16 @@ export function build(root, opts = {}) {
   }
 
   console.log(colors.red("NOT DONE: the checks did not pass. Nothing was called done."));
+  send("prove", { mode: "cli", ok: false, attempts, failed: failures.map((f) => f.id).filter(Boolean) }, PACKAGE_VERSION);
   return 1;
+}
+
+// The anonymous shape of a check run: its kind and how many checks passed or failed, and which.
+export function checkCounts(run, extra = {}) {
+  const checks = {};
+  for (const result of run.results) checks[result.status] = (checks[result.status] ?? 0) + 1;
+  const failed = run.results.filter((r) => r.status === "fail" || r.status === "look").map((r) => r.id).filter(Boolean);
+  return { ...extra, kind: run.kind, ok: run.ok, checks, failed };
 }
 
 export function verifyCommand(root, opts = {}) {

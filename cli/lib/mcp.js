@@ -9,7 +9,8 @@ import { createInterface } from "node:readline";
 import { analyseProject } from "./analyse.js";
 import { approvalView } from "./approval.js";
 import { firstName, fullName, isFirstVisit, rememberVisit } from "./banner.js";
-import { ensureConfig, report, runReview } from "./commands.js";
+import { checkCounts, ensureConfig, report, runReview } from "./commands.js";
+import { needsAnswer, recordProven, send as track, setSharing, sharing } from "./telemetry.js";
 import { paths, readConfig, readState, writeState } from "./config.js";
 import { composeBuildPrompt, composeSpecPrompt } from "./prompts.js";
 import { isGitRepo, reviewBase } from "./review.js";
@@ -70,6 +71,17 @@ const TOOLS = [
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
+    name: "factory_share",
+    description:
+      "Record the person's answer to whether Next-Gen Factory may share anonymous counts (which checks ran and what they caught; never code, file names or personal details). Only call it with the person's own answer.",
+    inputSchema: {
+      type: "object",
+      properties: { share: { type: "boolean", description: "true only if the person said yes." } },
+      required: ["share"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "factory_review",
     description:
       "The independent review: a separate AI session that never saw how you worked checks the change against the approved spec. Run it after factory_prove says DONE. It can take a few minutes.",
@@ -93,18 +105,23 @@ function captured(fn) {
   }
 }
 
+const ASK_TO_SHARE =
+  "Ask the person once, in your own words: may Next-Gen Factory share anonymous counts (which checks ran and what they caught) to make it better for every builder? Never their code, file names or personal details. Then call factory_share with their answer.";
+
 function welcome() {
   const name = firstName();
   const you = name ? `, ${name}` : "";
-  if (!isFirstVisit()) return null;
+  const ask = needsAnswer() ? `\n${ASK_TO_SHARE}` : "";
+  if (!isFirstVisit()) return ask ? ask.trim() : null;
   rememberVisit();
-  return `Welcome to Next-Gen Factory${you}. You are one of the builders of the AI economy. Africa builds.`;
+  return `Welcome to Next-Gen Factory${you}. You are one of the builders of the AI economy. Africa builds.\n(Show this welcome to the person.)${ask}`;
 }
 
 const text = (body, isError = false) => ({ content: [{ type: "text", text: body }], ...(isError ? { isError: true } : {}) });
 
 export function createServer({ root = process.cwd(), send }) {
   let clientCanAsk = false;
+  let client = "unknown";
   let nextId = 1;
   const waiting = new Map();
 
@@ -117,15 +134,22 @@ export function createServer({ root = process.cwd(), send }) {
     });
 
   const tools = {
+    factory_share({ share }) {
+      setSharing(share === true);
+      track("share", { ok: sharing(), mode: "mcp", client }, VERSION);
+      return text(share === true ? "Thank you. Anonymous counts will be shared. The person can stop any time with: factory share off" : "Nothing will be shared. Nothing leaves this computer.");
+    },
+
     factory_check() {
       const analysis = analyseProject(root);
       if (analysis.empty) return text("No project found here. Open a project folder first.", true);
       const config = readConfig(root);
       const { value: run } = captured(() => verify(root, { deep: false, config, save: false }));
+      track("check", checkCounts(run, { mode: "mcp", client }), VERSION);
       const greeting = welcome();
       return text(
         [
-          greeting ? `${greeting}\n(Show this welcome to the person.)\n` : "",
+          greeting ? `${greeting}\n` : "",
           `${config.name} (${analysis.label})`,
           ...analysis.summary.slice(1),
           "",
@@ -146,10 +170,12 @@ export function createServer({ root = process.cwd(), send }) {
       mkdirSync(join(root, "specs", name), { recursive: true });
       setActive(root, name);
       const prompt = composeSpecPrompt(root, config, job, target, { analysis: analyseProject(root), answers: {} });
+      writeState(root, { notDone: 0 });
+      track("job_start", { mode: "mcp", client, kind: config.kind }, VERSION);
       const greeting = welcome();
       return text(
         [
-          greeting ? `${greeting}\n(Show this welcome to the person.)\n` : "",
+          greeting ? `${greeting}\n` : "",
           `Next-Gen Factory job: ${name}`,
           `Write the spec to ${target}, following the instructions below. Then call factory_approve.`,
           "",
@@ -193,6 +219,7 @@ export function createServer({ root = process.cwd(), send }) {
       }
 
       const approval = approve(root, name, fullName(), how);
+      track("approve", { mode: "mcp", client, via: how.via === "chat" ? "chat" : "box" }, VERSION);
       setActive(root, name);
       const head = isGitRepo(root) ? spawnSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).stdout?.trim() : null;
       writeState(root, { buildBase: head || null, buildStartedAt: new Date().toISOString() });
@@ -214,9 +241,15 @@ export function createServer({ root = process.cwd(), send }) {
       const config = readConfig(root);
       const { value: run } = captured(() => verify(root, { deep: true, config, save: true }));
       const results = formatResults(root, run, { header: false });
+      const failed = run.results.filter((r) => r.kind === "proven" && r.status === "fail").map((r) => r.id).filter(Boolean);
+      const notDone = readState(root).notDone ?? 0;
       if (!run.ok) {
+        writeState(root, { notDone: notDone + 1 });
+        track("prove", { mode: "mcp", client, ok: false, attempts: notDone + 1, failed }, VERSION);
         return text(["NOT DONE. Fix what failed, then call factory_prove again.", "", results].join("\n"));
       }
+      recordProven({ caught: notDone > 0 ? 1 : 0 });
+      track("prove", { mode: "mcp", client, ok: true, attempts: notDone + 1, caught: notDone > 0 }, VERSION);
       return text(["DONE: the checks passed.", "", results, "", "Now call factory_review for the independent review."].join("\n"));
     },
 
@@ -236,6 +269,7 @@ export function createServer({ root = process.cwd(), send }) {
           `The independent review did not run: no second AI is installed on this computer (it uses ${config.agent?.command ?? "claude"}). Tell the person the change passed the checks but has no independent review. ${reportText}`,
         );
       }
+      track("review", { mode: "mcp", client, verdict: result.passed ? "approve" : "changes" }, VERSION);
       const verdict = result.passed ? "Proven by Next-Gen: the checks passed and a separate session approved the change." : `NOT DONE: ${result.summary}`;
       return text([verdict, result.file ? `Review: ${result.file}` : "", reportText].filter(Boolean).join("\n"));
     },
@@ -257,6 +291,7 @@ export function createServer({ root = process.cwd(), send }) {
     switch (method) {
       case "initialize": {
         clientCanAsk = Boolean(params?.capabilities?.elicitation);
+        client = String(params?.clientInfo?.name ?? "unknown").toLowerCase().replace(/[^a-z0-9-]/g, "-").slice(0, 32);
         const asked = params?.protocolVersion;
         reply({
           protocolVersion: PROTOCOLS.includes(asked) ? asked : "2025-06-18",

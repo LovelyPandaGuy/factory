@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, join } from "node:path";
+import { progressLine } from "./telemetry.js";
 import { colors } from "./util.js";
 
 // The Next-Gen mark in the terminal: an N whose diagonal runs into a G, in the brand gold.
@@ -58,7 +59,7 @@ export function rememberVisit() {
   }
 }
 
-export function welcomeLines({ name, first, version }) {
+export function welcomeLines({ name, first, version, progress = null }) {
   const you = name ? `, ${name}` : "";
   return first
     ? [
@@ -68,13 +69,13 @@ export function welcomeLines({ name, first, version }) {
       ]
     : [
         colors.bold(cream(`Welcome back${you}.`)),
-        cream("Every build you prove makes every builder stronger."),
+        cream(progress ?? "Every build you prove makes every builder stronger."),
         `${gold("Africa builds.")} ${colors.dim(`v${version}`)}`,
       ];
 }
 
-export function banner(version, root, { name = firstName(), first = isFirstVisit() } = {}) {
-  const lines = welcomeLines({ name, first, version });
+export function banner(version, root, { name = firstName(), first = isFirstVisit(), progress = progressLine() } = {}) {
+  const lines = welcomeLines({ name, first, version, progress });
   const rows = lines.map((line, i) => `  ${gold(MARK[i] ?? " ".repeat(width(MARK[0])))}   ${line}`);
   const inner = Math.max(...rows.map(width)) + 2;
   const edge = (l, r) => colors.dim(`${l}${"─".repeat(inner)}${r}`);

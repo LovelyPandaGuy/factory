@@ -1,6 +1,8 @@
 import { homedir } from "node:os";
 import { banner } from "./banner.js";
 import { serve } from "./mcp.js";
+import { needsAnswer, send, setSharing, settings, SHARE_QUESTION, sharing, blockedByEnvironment } from "./telemetry.js";
+import { createInterface as askLine } from "node:readline/promises";
 import { parse as parse_, resolve } from "node:path";
 import { createRequire } from "node:module";
 import {
@@ -23,7 +25,7 @@ const VERSION = createRequire(import.meta.url)("../package.json").version;
 
 const COMMANDS = new Set([
   "init", "spec", "approve", "plan", "tasks", "verify", "build", "review", "report",
-  "lesson", "status", "doctor", "help", "version", "mcp",
+  "lesson", "status", "doctor", "help", "version", "mcp", "share",
 ]);
 
 const VALUE_FLAGS = new Set([
@@ -84,6 +86,7 @@ Steps, if you want them one at a time
   factory lesson new              turn a real failure into a dated lesson
   factory init                    answer five questions to fill factory.config.json
   factory mcp                     run inside Claude Code, Cursor, Codex, Gemini or VS Code
+  factory share on|off            share anonymous counts with Next-Gen, or stop
 
 Options
   --ask         ask all seven questions before writing the spec
@@ -98,6 +101,19 @@ Options
 
 Nothing is written into your project until you start a job. Nothing is called
 done until the checks pass, and it never says "bug-free" or "compliant".`);
+}
+
+function shareCommand(choice) {
+  if (choice === "on" || choice === "off") {
+    setSharing(choice === "on");
+    console.log(choice === "on" ? "Sharing anonymous counts. Thank you. Turn it off any time: factory share off" : "Not sharing. Nothing leaves this computer.");
+    return 0;
+  }
+  if (blockedByEnvironment()) console.log("Not sharing: this computer says do not track, or it is a build server.");
+  else if (settings().share === undefined) console.log("You have not chosen yet. factory share on, or factory share off.");
+  else console.log(sharing() ? "Sharing anonymous counts. Turn it off: factory share off" : "Not sharing. Turn it on: factory share on");
+  console.log("What is shared, exactly: https://github.com/next-generation-collective/factory/blob/main/docs/TELEMETRY.md");
+  return 0;
 }
 
 // Your home folder or the top of the disk is never one project. Reading it means reading
@@ -136,6 +152,15 @@ export async function main(argv) {
       return 1;
     }
     if (process.stdout.isTTY) console.log(banner(VERSION, root));
+    if (process.stdout.isTTY && process.stdin.isTTY && needsAnswer()) {
+      const line = askLine({ input: process.stdin, output: process.stdout });
+      const answer = await line.question(`${SHARE_QUESTION} (y/N) `);
+      line.close();
+      setSharing(/^y(es)?$/i.test(answer.trim()));
+      send("share", { ok: sharing() }, VERSION);
+      console.log("");
+    }
+    send("run", { mode: "cli" }, VERSION);
   }
 
   if (!command) return start(root, flags);
@@ -149,6 +174,8 @@ export async function main(argv) {
   }
 
   switch (command) {
+    case "share":
+      return shareCommand(rest[0]);
     case "mcp":
       return serve(VERSION, root);
     case "init":
