@@ -17,14 +17,18 @@ const cream = (t) => colors.paint(truecolor ? "38;2;253;251;247" : "97", t);
 
 const width = (text) => [...text.replace(/\u001b\[[0-9;]*m/g, "")].length;
 
-// The builder's first name, from their git identity. Nothing is sent anywhere.
+// The builder's first name, from their git identity or, on a Mac, their account's full
+// name. Nothing is sent anywhere.
 export function firstName() {
-  try {
-    const name = execFileSync("git", ["config", "user.name"], { encoding: "utf8", timeout: 1000, stdio: ["ignore", "pipe", "ignore"] });
-    return name.trim().split(/\s+/)[0] || null;
-  } catch {
-    return null;
-  }
+  const ask = (cmd, args) => {
+    try {
+      return execFileSync(cmd, args, { encoding: "utf8", timeout: 1000, stdio: ["ignore", "pipe", "ignore"] }).trim();
+    } catch {
+      return "";
+    }
+  };
+  const full = ask("git", ["config", "user.name"]) || (process.platform === "darwin" ? ask("id", ["-F"]) : "");
+  return full.split(/\s+/)[0] || null;
 }
 
 // One small file in the builder's own settings folder, so the first welcome happens once.
