@@ -34,7 +34,7 @@
   /* Nav */
   nav { position: sticky; top: 0; z-index: 10; background: rgba(7, 7, 7, .82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-dark); }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
-  nav .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--canvas); font-family: "Bricolage Grotesque"; font-weight: 700; letter-spacing: .02em; }
+  nav .brand { white-space: nowrap; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--canvas); font-family: "Bricolage Grotesque"; font-weight: 700; letter-spacing: .02em; }
   nav .brand img { height: 30px; width: auto; }
   nav .links { display: none; gap: 24px; white-space: nowrap; font-size: 15px; color: rgba(253, 251, 247, .72); }
   nav .links a { text-decoration: none; transition: color .3s var(--ease); }
@@ -157,6 +157,18 @@
   .ask-text { color: var(--canvas); transition: opacity .5s var(--ease); }
   .ask-text.out { opacity: 0; }
 
+  /* Inside */
+  .inside { display: grid; gap: 16px; margin-top: 48px; }
+  @media (min-width: 980px) { .inside { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .inside .card p { color: var(--ink-soft); margin: 6px 0 14px; }
+  .cmd.light { background: var(--sunk); color: var(--ink); border-color: var(--line); margin-top: 0; max-width: none; font-size: 13px; }
+  .cmd.light button { color: var(--ink-soft); border-color: var(--line); }
+  .cmd.light code { white-space: normal; overflow-wrap: anywhere; }
+  .btn-dark { background: var(--ink); color: var(--canvas); }
+  .proof-more { display: inline-block; padding: 10px 0; font-weight: 600; color: var(--gold-deep); text-decoration: none; }
+  @media (max-width: 359px) { nav .wrap { gap: 8px; } nav .brand { font-size: 14px; } }
+  @media (max-width: 399px) { nav .brand { font-size: 15px; gap: 8px; } nav .brand img { height: 26px; } nav .btn { padding: 9px 14px; font-size: 14px; } }
+
   /* Companies */
   .offer { background: var(--ink); color: var(--canvas); border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
   .offer h3 { font-size: 26px; }
@@ -195,12 +207,11 @@
   <div class="wrap">
     <a class="brand" href="#top"><img src="assets/nextgen-logo-dark.png" alt="">Next-Gen Factory</a>
     <div class="links">
-      <a href="#shift">The shift</a>
       <a href="#proof">How it works</a>
+      <a href="#inside">Inside your AI</a>
       <a href="#network">The network</a>
       <a href="#companies">For companies</a>
       <a href="#founding">Founding Builders</a>
-      <a href="#partners">Who we are</a>
       <a href="https://github.com/next-generation-collective/factory">GitHub</a>
     </div>
     <a class="btn btn-gold" href="#founding">Start building</a>
@@ -275,6 +286,27 @@
 <span class="t-ok">PASSED.</span> The checks that ran found no proven problem.
 1 thing for a person to look at.</pre>
       </figure>
+    </div>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Inside your AI</div>
+      <h2>No commands. Just ask.</h2>
+      <p>Add Next-Gen Factory to the AI you already use, then ask for what you want in plain words. Your AI plans it, you approve it, your AI builds it, and the factory proves it.</p>
+    </div>
+    <div class="inside reveal">
+      <div class="card"><h3>Claude Code</h3><p>Type this once in Claude Code:</p>
+        <div class="cmd light" role="group" aria-label="Claude Code install"><code id="cmd3">/plugin install factory --marketplace next-generation-collective/factory</code><button type="button" data-copy="cmd3">Copy</button></div>
+      </div>
+      <div class="card"><h3>Cursor</h3><p>One click adds it to Cursor.</p>
+        <a class="btn btn-dark" href="https://cursor.com/en/install-mcp?name=factory&amp;config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBuZXh0LWdlbmVyYXRpb24tY29sbGVjdGl2ZS9mYWN0b3J5QGxhdGVzdCIsIm1jcCJdfQ==">Add to Cursor</a>
+      </div>
+      <div class="card"><h3>Codex, Gemini CLI, VS Code</h3><p>One line each.</p>
+        <a class="proof-more" href="https://github.com/next-generation-collective/factory/blob/main/docs/USE-IN-YOUR-AI.md">See the lines →</a>
+      </div>
     </div>
   </div>
 </section>
