@@ -6,8 +6,10 @@ Newest first. Dates are YYYY-MM-DD.
 
 ### Added
 
-- The Next-Gen mark in the terminal: when you start the factory it greets you with the NG
-  mark in gold, its name and version, and "Africa builds."
+- A welcome in the terminal: the NG mark in gold, and a greeting by your first name (from
+  your git settings). The first time: "Welcome to Next-Gen Factory. You are one of the
+  builders of the AI economy." After that: "Welcome back." A one-line file in
+  `~/.config/next-gen/` remembers the first visit; nothing is sent anywhere.
 
 ## 0.3.1 (2026-10-26)
 
