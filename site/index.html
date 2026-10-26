@@ -62,7 +62,12 @@
   .cmd code { flex: 1; overflow-x: auto; white-space: nowrap; }
   .cmd button { flex: none; background: transparent; color: rgba(253, 251, 247, .7); border: 1px solid var(--line-dark); border-radius: 8px; padding: 6px 12px; font: 600 13px "Hanken Grotesk"; cursor: pointer; transition: color .3s var(--ease); }
   .cmd button:hover { color: var(--canvas); }
-  @media (max-width: 479px) { .cmd { font-size: 13px; padding-left: 14px; gap: 8px; } }
+  @media (max-width: 479px) { .cmd { font-size: 13px; padding-left: 14px; gap: 8px; } .cmd code { white-space: normal; overflow-wrap: anywhere; } .proof-grid .term pre { font-size: 11px; padding: 16px 14px; white-space: pre-wrap; } .t-detail { display: none; } }
+  @media (pointer: coarse), (max-width: 719px) {
+    .cmd button { min-height: 40px; padding: 8px 14px; }
+    .goal small a, footer a { display: inline-block; padding: 10px 0; }
+    nav .brand { min-height: 44px; }
+  }
   .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 78% 45%, rgba(245, 166, 35, .10), transparent 70%); pointer-events: none; }
   .hero .map { width: 115%; max-width: none; height: auto; display: block; margin: -40px -8% -40px 0; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
   @media (max-width: 979px) { .hero .map { width: 100%; margin: 0 auto; max-width: 520px; } }
@@ -261,11 +266,11 @@
 <pre><span class="t-dim">$</span> npx @next-generation-collective/factory
 
 <b>What this project can prove right now</b>
-  <span class="t-ok">PASS</span>     Secrets in code          None in 123 files
-  <span class="t-look">LOOK</span>     Possible test passwords  3 lines in test files
-  <span class="t-ok">OK</span>       Tests prove something    33 test files, none empty
-  <span class="t-dim">NOT RUN</span>  Tests run and pass       Run with --deep
-  <span class="t-ok">OK</span>       Personal data            None found
+  <span class="t-ok">PASS</span>     Secrets in code<span class="t-detail">          None in 123 files</span>
+  <span class="t-look">LOOK</span>     Possible test passwords<span class="t-detail">  3 lines in test files</span>
+  <span class="t-ok">OK</span>       Tests prove something<span class="t-detail">    33 test files, none empty</span>
+  <span class="t-dim">NOT RUN</span>  Tests run and pass<span class="t-detail">       Run with --deep</span>
+  <span class="t-ok">OK</span>       Personal data<span class="t-detail">            None found</span>
 
 <span class="t-ok">PASSED.</span> The checks that ran found no proven problem.
 1 thing for a person to look at.</pre>
