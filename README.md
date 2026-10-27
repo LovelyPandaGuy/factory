@@ -11,13 +11,13 @@
   <a href="FOUNDING-BUILDERS.md">Founding Builders</a>
 </p>
 
-<p align="center"><b>Add it to Claude Code. Type this once:</b></p>
+<p align="center"><b>Add it to Claude Code. Type this once, then <code>/reload-plugins</code>, then just ask:</b></p>
 
 ```
 /plugin install factory --marketplace next-generation-collective/factory
 ```
 
-<p align="center">Then just ask for what you want. Cursor, Codex, Gemini CLI and VS Code: <a href="docs/USE-IN-YOUR-AI.md">one line each</a>.<br>Companies and funders: <a href="https://next-generation-collective.github.io/factory/#companies">the website</a>.</p>
+<p align="center">Cursor, Codex, Gemini CLI and VS Code: <a href="docs/USE-IN-YOUR-AI.md">one line each</a>.<br>Companies and funders: <a href="https://next-generation-collective.github.io/factory/#companies">the website</a>.</p>
 
 ---
 
@@ -30,16 +30,17 @@ for every builder after you.
 We are building it in the open, in Africa, toward one million proven builds by African
 builders. [Read why.](MOVEMENT.md)
 
-## Start inside your AI
+## Start in three steps
 
-No commands needed. In Claude Code:
+1. **Install** it in Claude Code:
+   ```
+   /plugin install factory --marketplace next-generation-collective/factory
+   ```
+2. **Switch it on:** type `/reload-plugins`.
+3. **Just ask** for what you want, in plain words.
 
-```
-/plugin install factory --marketplace next-generation-collective/factory
-```
-
-Then ask for what you want in plain words. Cursor, Codex, Gemini CLI and VS Code:
-[one line each](docs/USE-IN-YOUR-AI.md).
+Needs Node.js 20 or newer. Cursor, Codex, Gemini CLI and VS Code:
+[one line each](docs/USE-IN-YOUR-AI.md). Stuck? [Three quick fixes](docs/USE-IN-YOUR-AI.md#if-something-is-off).
 
 ## Or in a terminal
 

@@ -7,5 +7,7 @@ const context = [
   "Do not change code until the person has approved the spec through factory_approve.",
   "After building, call factory_prove until it says DONE, then factory_review.",
   "Never call work done, bug-free, secure or compliant unless the factory's checks say so.",
+  "If the person asks to stop or start sharing with Next-Gen, call factory_share with their choice.",
+  "If the person wants to tell Next-Gen something about the factory, call factory_feedback with their words.",
 ].join(" ");
 process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "SessionStart", additionalContext: context } }));

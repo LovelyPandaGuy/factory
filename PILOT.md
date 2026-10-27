@@ -16,15 +16,15 @@ This page is everything you need. What you report shapes what we build next.
 
 ## Step 0: put it inside your AI (1 minute, recommended)
 
-In Claude Code, type this once:
+In Claude Code, type this once, then `/reload-plugins`:
 
 ```
 /plugin install factory --marketplace next-generation-collective/factory
 ```
 
-From then on you just ask for what you want, in plain words, and type `/factory` to check a
-project. Cursor, Codex, Gemini CLI and VS Code: [one line each](docs/USE-IN-YOUR-AI.md).
-The steps below work either way: in your AI's chat, or in a terminal.
+From then on you just ask for what you want, in plain words. Needs Node.js 20 or newer.
+Cursor, Codex, Gemini CLI and VS Code: [one line each](docs/USE-IN-YOUR-AI.md). The steps
+below work either way: in your AI's chat, or in a terminal.
 
 ## Step 1: what your project can prove (1 minute)
 

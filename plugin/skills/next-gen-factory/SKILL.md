@@ -17,3 +17,7 @@ Work through the factory for every change to the project's code:
    Next-Gen" only when both the checks and the review passed.
 
 Never call work done, bug-free, secure or compliant on your own. The factory's checks decide.
+
+If the person asks to stop or start sharing with Next-Gen, call `factory_share` with their
+choice. If they want to tell Next-Gen something about the factory, good or bad, call
+`factory_feedback` with their words and give them the link it returns.

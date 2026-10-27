@@ -13,7 +13,8 @@ npx @next-generation-collective/factory share        # what you chose
 ```
 
 Inside Claude Code or another AI tool, your AI asks you the same question once, and records
-only your answer.
+only your answer. To change it later, just tell your AI: *"stop sharing with Next-Gen"* or
+*"start sharing with Next-Gen"*.
 
 ## Never shared
 

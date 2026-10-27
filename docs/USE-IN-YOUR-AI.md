@@ -4,18 +4,55 @@ You do not need to type factory commands. Add Next-Gen Factory to the AI tool yo
 use, then ask for what you want in plain words. The AI plans it, you approve it, the AI
 builds it, and the factory proves it.
 
-## Claude Code
+## Claude Code (recommended)
 
-In Claude Code, type:
+**1. Install it.** In Claude Code, type:
 
 ```
 /plugin install factory --marketplace next-generation-collective/factory
 ```
 
-Then just ask, for example "add a discount for orders over 100". Or type `/factory` to see
-what your project can prove.
+Or, from a terminal: `claude plugin install factory --marketplace next-generation-collective/factory`
 
-## Cursor
+**2. Switch it on.** Type `/reload-plugins`, or start a new Claude Code session.
+
+**3. Just ask.** For example: *"add a discount for orders over 100"*. That is all. The
+factory plans it with you, waits for your yes, and proves the result.
+
+You need Node.js 20 or newer on your computer (`node --version` shows it; get it from
+[nodejs.org](https://nodejs.org)). The plugin carries the factory itself, so nothing else is
+downloaded.
+
+### What you will see
+
+1. A welcome, and one question: may the factory share anonymous counts? Yes or no, your call.
+2. The plan, with the questions people usually forget, and what the AI assumed.
+3. An approval. Nothing is built until you say yes.
+4. The build, the checks and a second AI's review.
+5. **Proven by Next-Gen**, and where the proof is saved.
+
+### Handy things to say
+
+| Say or type | What happens |
+|---|---|
+| `/factory` | What your project can prove right now. Claude Code may show it as `/factory:factory`. |
+| *"stop sharing with Next-Gen"* | Sharing is turned off. Nothing leaves your computer. |
+| *"tell Next-Gen it caught a real bug"* | Your feedback opens filled in on GitHub, for you to submit. |
+
+### If something is off
+
+| What you see | What to do |
+|---|---|
+| Claude says the factory tools are not available | Type `/reload-plugins`. If that does not help, check `node --version` shows 20 or newer. |
+| Claude builds without asking for your approval | Type `/factory` followed by your request, for example `/factory add a discount`. |
+| You want the newest version | Type `/plugin`, choose the factory plugin and update it, or run `claude plugin update factory@next-gen`. |
+
+## Cursor, Codex, Gemini CLI and VS Code
+
+These use the same open standard (MCP) and download the factory from npm. They work, but we
+have not tested them ourselves yet. Tell us how it goes.
+
+### Cursor
 
 [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=factory&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBuZXh0LWdlbmVyYXRpb24tY29sbGVjdGl2ZS9mYWN0b3J5QGxhdGVzdCIsIm1jcCJdfQ==)
 
@@ -25,19 +62,19 @@ Or add this to `.cursor/mcp.json`:
 { "mcpServers": { "factory": { "command": "npx", "args": ["-y", "@next-generation-collective/factory@latest", "mcp"] } } }
 ```
 
-## Codex
+### Codex
 
 ```bash
 codex mcp add factory -- npx -y @next-generation-collective/factory@latest mcp
 ```
 
-## Gemini CLI
+### Gemini CLI
 
 ```bash
 gemini mcp add factory npx -y @next-generation-collective/factory@latest mcp
 ```
 
-## VS Code
+### VS Code
 
 ```bash
 code --add-mcp '{"name":"factory","command":"npx","args":["-y","@next-generation-collective/factory@latest","mcp"]}'
