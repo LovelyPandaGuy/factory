@@ -1,11 +1,19 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "factory",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Next-Gen Factory inside Claude Code: every change is planned, approved by you, built, checked and proven. Africa builds.",
-  "author": { "name": "Next-Gen Collective", "url": "https://nextgencollective.co.za" },
+  "author": {
+    "name": "Next-Gen Collective",
+    "url": "https://nextgencollective.co.za"
+  },
   "homepage": "https://github.com/next-generation-collective/factory",
   "repository": "https://github.com/next-generation-collective/factory",
   "license": "MIT",
-  "keywords": ["proof", "testing", "code-review", "africa"]
+  "keywords": [
+    "proof",
+    "testing",
+    "code-review",
+    "africa"
+  ]
 }

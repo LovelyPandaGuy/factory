@@ -1,0 +1,41 @@
+{
+  "name": "@next-generation-collective/factory",
+  "version": "0.5.0",
+  "description": "Checks the work you build with AI, proves it works, and learns from every builder. Built in the open, in Africa.",
+  "type": "module",
+  "bin": {
+    "factory": "bin/factory.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "template",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/next-generation-collective/factory.git",
+    "directory": "cli"
+  },
+  "homepage": "https://github.com/next-generation-collective/factory#readme",
+  "bugs": {
+    "url": "https://github.com/next-generation-collective/factory/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "software-factory",
+    "ai-agents",
+    "verification",
+    "proof",
+    "cli"
+  ],
+  "license": "MIT"
+}

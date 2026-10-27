@@ -2,7 +2,7 @@
 
 Newest first. Dates are YYYY-MM-DD.
 
-## 0.5.0 (coming next)
+## 0.5.0 (2026-10-27, in the Claude Code plugin; npm to follow)
 
 ### Added
 
@@ -14,6 +14,8 @@ Newest first. Dates are YYYY-MM-DD.
 - `factory feedback "..."`: one line of feedback opens a filled-in GitHub form for you to submit.
   Inside your AI, `factory_feedback` does the same, and your AI asks once after a proven build
   whether the factory was useful.
+- The Claude Code plugin now carries the factory inside it, so it updates with every release on
+  GitHub and no longer downloads anything from npm.
 - Claude Code plugin: tells Claude at the start of every session to use the factory for any
   change, after a real test where a plain request skipped it.
 
